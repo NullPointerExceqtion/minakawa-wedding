@@ -1,0 +1,20 @@
+<% include partials/header %>
+
+<h1><%= title %></h1>
+
+<form action="/update" method="post">
+  <input type="hidden" name="_method" value="put">
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <input type="hidden" name="_id" value="<%= post._id %>">
+  <p>
+    <input type="text" name="title" value="<%= post.title %>" size="60">
+    <% if( errors && errors.title ){ %>
+      <strong><%= errors.title.message %></strong>
+    <% } %>
+  </p>
+  <p><textarea name="contents" cols="60" rows="12"><%= post.contents %></textarea></p>
+  <p><button type="submit">作成</button></p>
+</form>
+<p><a href="/">一覧に戻る</a></p>
+
+<% include partials/footer %>

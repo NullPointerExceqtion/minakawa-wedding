@@ -1,0 +1,21 @@
+<% include partials/header %>
+
+<h1><%= title %></h1>
+<ul>
+  <% posts.forEach(function(post){ %>
+    <li>
+      <form action="/destroy" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="_csrf" value="<%= csrf %>">
+        <input type="hidden" name="_id" value="<%= post._id %>">
+        <a href="/edit/<%= post._id %>"><%= post.title %></a>
+        <span>Created: <%= post.created.toDateString() %></span>
+        <button type="submit" onclick="return confirm('削除してもよろしいでしょうか？');">削除</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+
+<p><a href="/new">記事の追加</a></p>
+
+<% include partials/footer %>
