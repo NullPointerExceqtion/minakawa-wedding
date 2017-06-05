@@ -22,7 +22,7 @@ http.listen(project.server_port)
 debug(`Server is now running at http://localhost:${project.server_port}.`)
 
 // データベースを接続
-// mongoose.connect('mongodb://localhost/blog')
+mongoose.connect('mongodb://localhost/blog')
 
 io.on('connection', function(socket) {
   debugSocket('connection')
