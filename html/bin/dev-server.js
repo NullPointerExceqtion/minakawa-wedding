@@ -27,6 +27,23 @@ mongoose.connect('mongodb://localhost/blog')
 io.on('connection', function (socket) {
   debugSocket('connection')
 
+  /**
+   * joinRoom
+   * guestUser, hostUserはroom分けする
+   * joinRoomは各react componentのcomponentDidMountのタイミングでemitしている
+   * @param {string} roomName ルーム名 現状guest, hostのどちらか
+   */
+  socket.on('joinRoom', function (roomName) {
+    debugSocket('joinRoom to ' + roomName)
+    if (socket.roomName) {
+      debugSocket('room change ' + socket.roomName + ' -> ' + roomName)
+      socket.leave(socket.roomName)
+    }
+
+    socket.roomName = roomName
+    socket.join(roomName)
+  })
+
   socket.on('quizListGiven', function (fn) {
     debugSocket('quizListGiven')
 
@@ -42,7 +59,7 @@ io.on('connection', function (socket) {
   })
 
   socket.on('quizPublished', function (id) {
-    socket.broadcast.emit('quizPublished', {
+    socket.broadcast.to('guest').emit('quizPublished', {
       title: 'クイズタイトル1',
       answer1: 'a',
       answer2: 'b',

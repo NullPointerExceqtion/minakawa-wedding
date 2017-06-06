@@ -17,6 +17,8 @@ class GuestView extends React.Component {
   }
 
   componentDidMount() {
+    socket.emit('joinRoom', 'guest')
+
     window.socket.on('quizPublished', (quizItem) => {
       this.setState(quizItem)
     })

@@ -3,6 +3,8 @@ import QuizList from '../../../components/QuizList'
 
 class HostView extends React.Component {
   componentDidMount() {
+    socket.emit('joinRoom', 'host')
+
     const { quizListGiven } = this.props
     quizListGiven()
   }
