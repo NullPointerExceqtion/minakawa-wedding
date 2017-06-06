@@ -24,10 +24,10 @@ debug(`Server is now running at http://localhost:${project.server_port}.`)
 // データベースを接続
 mongoose.connect('mongodb://localhost/blog')
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
   debugSocket('connection')
 
-  socket.on('quizListGiven', function(fn) {
+  socket.on('quizListGiven', function (fn) {
     debugSocket('quizListGiven')
 
     // 全問題の出力
@@ -39,6 +39,16 @@ io.on('connection', function(socket) {
         title: 'クイズタイトル2'
       }
     ])
+  })
+
+  socket.on('quizPublished', function (id) {
+    socket.broadcast.emit('quizPublished', {
+      title: 'クイズタイトル1',
+      answer1: 'a',
+      answer2: 'b',
+      answer3: 'c',
+      answer4: 'd'
+    })
   })
 })
 
