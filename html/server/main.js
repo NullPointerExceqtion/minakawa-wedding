@@ -19,13 +19,16 @@ if (project.env === 'development') {
 
   debug('Enabling webpack dev and HMR middleware')
   app.use(require('webpack-dev-middleware')(compiler, {
-    publicPath  : webpackConfig.output.publicPath,
-    contentBase : project.paths.client(),
-    hot         : true,
-    quiet       : project.compiler_quiet,
-    noInfo      : project.compiler_quiet,
-    lazy        : false,
-    stats       : project.compiler_stats
+    publicPath   : webpackConfig.output.publicPath,
+    contentBase  : project.paths.client(),
+    hot          : true,
+    quiet        : project.compiler_quiet,
+    noInfo       : project.compiler_quiet,
+    lazy         : false,
+    stats        : project.compiler_stats,
+    watchOptions : {
+      poll: true
+    }
   }))
   app.use(require('webpack-hot-middleware')(compiler, {
     path: '/__webpack_hmr'
