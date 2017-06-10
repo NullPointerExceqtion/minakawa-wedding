@@ -4,50 +4,50 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import { Card, CardActions, CardTitle } from 'material-ui/Card'
 
 class GuestView extends React.Component {
-  constructor() {
-    super()
-
-    this.state = {
-      title: '',
-      answer1: '',
-      answer2: '',
-      answer3: '',
-      answer4: ''
-    }
-  }
-
   componentDidMount() {
-    socket.emit('joinRoom', 'guest')
+    const {showQuizItem} = this.props
+    window.socket.emit('joinRoom', 'guest')
 
     window.socket.on('quizPublished', (quizItem) => {
-      this.setState(quizItem)
+      showQuizItem(quizItem)
+    })
+
+    window.socket.on('answerStop', () => {
+      
     })
   }
 
   render() {
+    const {answerSubmitted, quizItem} = this.props
+    console.log(quizItem)
+
     return (
       <div>
         {
-          this.state.title ? (
+          quizItem.title ? (
             <Card>
-              <CardTitle title={ this.state.title } />
+              <CardTitle title={quizItem.title} />
               <CardActions>
                 <RadioButtonGroup name='answer'>
                   <RadioButton
                     value='1'
-                    label={ this.state.answer1 }
+                    label={quizItem.answer1}
+                    onTouchTap={() => answerSubmitted(1)}
                   />
                   <RadioButton
                     value='2'
-                    label={ this.state.answer2 }
+                    label={quizItem.answer2}
+                    onTouchTap={() => answerSubmitted(2)}
                   />
                   <RadioButton
                     value='3'
-                    label={ this.state.answer3 }
+                    label={quizItem.answer3}
+                    onTouchTap={() => answerSubmitted(3)}
                   />
                   <RadioButton
                     value='4'
-                    label={ this.state.answer4 }
+                    label={quizItem.answer4}
+                    onTouchTap={() => answerSubmitted(4)}
                   />
                 </RadioButtonGroup>
               </CardActions>
