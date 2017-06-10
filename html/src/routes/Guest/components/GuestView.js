@@ -24,7 +24,9 @@ class GuestView extends React.Component {
     return (
       <div>
         {
-          quizItem.title ? (
+          quizItem.isSubmitted ? (
+            <p>回答済みです</p>
+          ) : quizItem.title ? (
             <Card>
               <CardTitle title={quizItem.title} />
               <CardActions>
