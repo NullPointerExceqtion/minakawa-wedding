@@ -55,6 +55,7 @@ export const actions = {
 const ACTION_HANDLERS = {
   [REGIST_QUIZ]    : (state, action) => {
     const quizData = {
+      _id: action.payload._id,
       title: action.payload.title,
       answer1: action.payload.answer1,
       answer2: action.payload.answer2,

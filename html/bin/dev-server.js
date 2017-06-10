@@ -14,7 +14,8 @@ const session = require('express-session')
 const csurf = require('csurf')
 const flash = require('connect-flash')
 const mongoose = require('mongoose')
-const Post = require('../models/Post')
+const Users = require('../models/Users')
+const Questions = require('../models/Questions')
 
 // socket.ioを使用するためlistenするのはhttp側に変更
 // server.listen(project.server_port)
@@ -22,11 +23,13 @@ http.listen(project.server_port)
 debug(`Server is now running at http://localhost:${project.server_port}.`)
 
 // データベースを接続
-mongoose.connect('mongodb://localhost/blog')
+mongoose.connect('mongodb://localhost/quiz')
 
 io.on('connection', function (socket) {
   debugSocket('connection')
 
+  var users = new Users();
+  var questions = new Questions();
   /**
    * joinRoom
    * guestUser, hostUserはroom分けする
@@ -46,25 +49,22 @@ io.on('connection', function (socket) {
 
   socket.on('quizListGiven', function (fn) {
     debugSocket('quizListGiven')
-
-    // 全問題の出力
     fn([
-      {
-        title: 'クイズタイトル1'
-      },
-      {
-        title: 'クイズタイトル2'
-      }
+      // 全問題の出力
+      Questions.find({}, function(err, quiz){return  quiz})
     ])
   })
 
-  socket.on('quizPublished', function (id) {
+  socket.on('quizPublished', function (quiz) {
     socket.broadcast.to('guest').emit('quizPublished', {
+      qiiz
+      /*
       title: 'クイズタイトル1',
       answer1: 'a',
       answer2: 'b',
       answer3: 'c',
       answer4: 'd'
+      */
     })
   })
 })
