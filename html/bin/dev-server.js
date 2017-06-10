@@ -47,17 +47,21 @@ io.on('connection', function (socket) {
     socket.join(roomName)
   })
 
+
   socket.on('quizListGiven', function (fn) {
     debugSocket('quizListGiven')
-    fn([
       // 全問題の出力
-      Questions.find({}, function(err, quiz){return  quiz})
-    ])
+      Questions.find({}, function(err, docs) {
+        var quizlist;
+        for (var i=0, size=docs.length; i<size; ++i) {
+          quizlist.push({title: docs[i].title})
+        }
+        fn(quizlist)
+      })
   })
 
   socket.on('quizPublished', function (quiz) {
     socket.broadcast.to('guest').emit('quizPublished', {
-      qiiz
       /*
       title: 'クイズタイトル1',
       answer1: 'a',
