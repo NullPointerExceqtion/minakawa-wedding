@@ -52,9 +52,11 @@ io.on('connection', function (socket) {
     debugSocket('quizListGiven')
       // 全問題の出力
       Questions.find({}, function(err, docs) {
-        var quizlist;
+        var quizlist = [];
         for (var i=0, size=docs.length; i<size; ++i) {
-          quizlist.push({title: docs[i].title})
+          if (docs[i]) {
+            quizlist.push({title: docs[i].title})
+          }
         }
         fn(quizlist)
       })
