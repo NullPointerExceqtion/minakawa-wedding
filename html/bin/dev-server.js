@@ -65,7 +65,11 @@ io.on('connection', function (socket) {
       })
   })
 
-  socket.on('quizPublished', function (quiz) {
+  socket.on('quizPublished', function (_id) {
+    // @matsuken
+    // _idは選択した問題のmongodb object idっす
+    // _idに合わせて問題の取得とemitよろしくです
+    debugSocket('published _id is ' + _id)
     socket.broadcast.to('guest').emit('quizPublished', {
       /*
       title: 'クイズタイトル1',

@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton'
 
 class QuizListiItem extends React.Component {
   render() {
-    const { title, id, quizPublished } = this.props
+    const { title, _id, quizPublished } = this.props
 
     return (
       <Card>
@@ -12,7 +12,7 @@ class QuizListiItem extends React.Component {
           title={ title }
         />
         <CardActions>
-          <FlatButton label='開始' onTouchTap={() => quizPublished(id) } />
+          <FlatButton label='開始' onTouchTap={() => quizPublished(_id) } />
           <FlatButton label='解答締め切り' />
         </CardActions>
       </Card>
