@@ -65,19 +65,14 @@ io.on('connection', function (socket) {
       })
   })
 
-  socket.on('quizPublished', function (_id) {
-    // @matsuken
-    // _idは選択した問題のmongodb object idっす
-    // _idに合わせて問題の取得とemitよろしくです
-    debugSocket('published _id is ' + _id)
-    socket.broadcast.to('guest').emit('quizPublished', {
-      /*
-      title: 'クイズタイトル1',
-      answer1: 'a',
-      answer2: 'b',
-      answer3: 'c',
-      answer4: 'd'
-      */
+   socket.on('quizPublished', function (_id) {
+    //_id = '593bfe29c7811f0b6bde8f55'
+    var answerlist = {}
+    Questions.find({'_id': _id}, function (err, docs) {
+      if (docs) {
+        answerlist = docs[0]
+      }
+      socket.broadcast.to('guest').emit('quizPublished', answerlist)
     })
   })
 
@@ -85,64 +80,3 @@ io.on('connection', function (socket) {
     debugSocket('submittedNumber: ' + submittedNumber)
   })
 })
-
-// function openChannel(io, channel){
-//     if (io.nsps["/" + channel]){
-//         // 名前空間はすでに作成済み
-//         return;
-//     }
-
-//     // クイズチャンネルを作成する
-//     var quizChannel = io.of("/" + channel);
-
-//     // ハンドラー登録
-//     quizChannel.on("connection", function(socket){
-//         socket.on("quizPublished", function(quiz){
-//             quizChannel.emit("quizPublished", quiz);
-//         });
-
-//         socket.on("answerSubmitted", function(answer){
-//             quizChannel.emit("answerSubmitted", answer);
-//         });
-
-//         socket.on("correctAnswerGiven", function(answer){
-//             quizChannel.emit("correctAnswerGiven", answer);
-//         });
-//     });
-// }
-
-// // 出題者向けページ
-// app.get("/", function(req, res, next){
-//     if (req.query.channel){
-//         openChannel(io, req.query.channel);
-//         res.render("host", {channel: req.query.channel});
-//         return;
-//     }
-//     res.render("host", {channel: null});
-//     return;
-// });
-
-// // 回答者向けページ
-// app.get("/:channel", function(req, res, next){
-//     res.render("guest", {
-//         channel: req.params.channel,
-//         name: "名前の入力 | SampleApp"
-//     });
-//     return;
-// });
-
-// app.post("/regist", function(req, res, next) {
-//   var post = new Post();
-//   post.name = req.body.title;
-//   post.save(function(err){
-//     // エラーがあれば、メッセージを残して追加画面に
-//     if( err ){
-//       req.flash("errors", err.errors);
-//       res.redirect("/");
-
-//     // エラーが無ければ一覧に
-//     }else{
-//       res.redirect("/");
-//     }
-//   });
-// });
