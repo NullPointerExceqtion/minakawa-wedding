@@ -11,7 +11,7 @@ class QuizList extends React.Component {
           return (
             <QuizItem
               key={ i }
-              id={ i }
+              _id={ quizItem._id }
               title={ quizItem.title }
               quizPublished={ quizPublished }
             />

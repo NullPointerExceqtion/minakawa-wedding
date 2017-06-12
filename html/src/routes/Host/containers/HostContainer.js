@@ -17,8 +17,8 @@ const mapDispatchToProps = (dispatch, getState) => {
     quizListGiven: () => {
       dispatch(quizListGiven())
     },
-    quizPublished: (id) => {
-      dispatch(quizPublished(id))
+    quizPublished: (_id) => {
+      dispatch(quizPublished(_id))
     }
   }
 }
