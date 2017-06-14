@@ -30,6 +30,7 @@ io.on('connection', function (socket) {
 
   var users = new Users();
   var questions = new Questions();
+  
   /**
    * joinRoom
    * guestUser, hostUserはroom分けする
@@ -66,9 +67,8 @@ io.on('connection', function (socket) {
   })
 
    socket.on('quizPublished', function (_id) {
-    //_id = '593bfe29c7811f0b6bde8f55'
-    var answerlist = {}
     Questions.find({'_id': _id}, function (err, docs) {
+      answerlist　= {}
       if (docs) {
         answerlist = docs[0]
       }
@@ -78,5 +78,19 @@ io.on('connection', function (socket) {
 
   socket.on('answerSubmitted', function (submittedNumber) {
     debugSocket('submittedNumber: ' + submittedNumber)
+    _id = '593bfe29c7811f0b6bde8f55'
+    Questions.find({'_id': _id}, function (err, docs) {
+      if (docs) {
+        quizinfo = docs[0]
+      }
+      if(quizinfo.correct_answer == submittedNumber) {
+        //TODO 正解を返却
+        console.log('true')
+      } else {
+        //TODO 不正解を返却
+        console.log('false')
+      }
+    })
   })
 })
+
