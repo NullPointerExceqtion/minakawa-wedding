@@ -24,6 +24,7 @@ debug(`Server is now running at http://localhost:${project.server_port}.`)
 
 // データベースを接続
 mongoose.connect('mongodb://localhost/quiz')
+mongoose.Promise = global.Promise;
 
 io.on('connection', function (socket) {
   debugSocket('connection')
@@ -90,6 +91,16 @@ io.on('connection', function (socket) {
         //TODO 不正解を返却
         console.log('false')
       }
+    })
+  })
+
+  socket.on('userRegist', function (userName) {
+    _id = new mongoose.Types.ObjectId
+    users._id = _id
+    users.name = userName
+    users.save(function (err) {
+      console.log('insert_sucess')
+      //TODO _idの返却
     })
   })
 })

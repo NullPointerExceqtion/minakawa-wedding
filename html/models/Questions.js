@@ -2,7 +2,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var PostSchema = new Schema({
+var QuestionsSchema = new Schema({
   title: {type: String, default: ""},
   body: {type: String, default: ""},
   answer1: {type: String, default: ""},
@@ -15,4 +15,4 @@ var PostSchema = new Schema({
 });
 
 
-module.exports = mongoose.model("Questions", PostSchema);
+module.exports = mongoose.model("Questions", QuestionsSchema);

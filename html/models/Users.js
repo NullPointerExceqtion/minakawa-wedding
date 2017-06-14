@@ -2,8 +2,8 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var PostSchema = new Schema({
-  id: {type: Number},
+var UserSchema = new Schema({
+  id: Schema.Types.ObjectId,
   name: {type: String, default: ""},
   hitoshi_count: {type: Number, default: 5},
   correct_answer_count:  {type: Number, default: 0},
@@ -11,4 +11,4 @@ var PostSchema = new Schema({
   modified: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model("Users", PostSchema);
+module.exports = mongoose.model("Users", UserSchema);
