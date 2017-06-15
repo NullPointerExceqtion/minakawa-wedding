@@ -77,7 +77,7 @@ io.on('connection', function (socket) {
     })
   })
 
-  socket.on('answerSubmitted', function (submittedNumber) {
+  socket.on('answerSubmitted', function (submittedNumber, fn) {
     debugSocket('submittedNumber: ' + submittedNumber)
     _id = '593bfe29c7811f0b6bde8f55'
     Questions.find({'_id': _id}, function (err, docs) {
@@ -94,13 +94,12 @@ io.on('connection', function (socket) {
     })
   })
 
-  socket.on('userRegist', function (userName) {
+  socket.on('userRegist', function (userName, fn) {
     _id = new mongoose.Types.ObjectId
     users._id = _id
     users.name = userName
     users.save(function (err) {
-      console.log('insert_sucess')
-      //TODO _idの返却
+      fn(_id)
     })
   })
 })
