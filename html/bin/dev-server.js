@@ -85,11 +85,9 @@ io.on('connection', function (socket) {
         quizinfo = docs[0]
       }
       if(quizinfo.correct_answer == submittedNumber) {
-        //TODO 正解を返却
-        console.log('true')
+        fn(true)
       } else {
-        //TODO 不正解を返却
-        console.log('false')
+        fn(false)
       }
     })
   })
