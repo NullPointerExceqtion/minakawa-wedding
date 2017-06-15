@@ -5,16 +5,20 @@ class HostView extends React.Component {
   componentDidMount() {
     socket.emit('joinRoom', 'host')
 
-    const { quizListGiven } = this.props
+    const {quizListGiven} = this.props
     quizListGiven()
   }
 
   render () {
-    const { quizItems, quizPublished } = this.props
+    const {quizItems, quizPublished, answerStop} = this.props
 
     return (
       <div>
-        <QuizList quizItems={ quizItems } quizPublished={ quizPublished } />
+        <QuizList
+          quizItems={quizItems}
+          quizPublished={quizPublished}
+          answerStop={answerStop}
+        />
       </div>
     )
   }

@@ -1,19 +1,19 @@
 import React from 'react'
-import { Card, CardActions, CardHeader } from 'material-ui/Card'
+import {Card, CardActions, CardHeader} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 
 class QuizListiItem extends React.Component {
   render() {
-    const { title, _id, quizPublished } = this.props
+    const {title, _id, quizPublished, answerStop} = this.props
 
     return (
       <Card>
         <CardHeader
-          title={ title }
+          title={title}
         />
         <CardActions>
-          <FlatButton label='開始' onTouchTap={() => quizPublished(_id) } />
-          <FlatButton label='解答締め切り' />
+          <FlatButton label='開始' onTouchTap={() => quizPublished(_id)} />
+          <FlatButton label='解答締め切り' onTouchTap={() => answerStop(_id)} />
         </CardActions>
       </Card>
     )

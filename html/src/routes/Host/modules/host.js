@@ -3,7 +3,7 @@
 // ------------------------------------
 export const REGIST_QUIZ = 'REGIST_QUIZ'
 export const QUIZ_PUBLISHED = 'QUIZ_PUBLISHED'
-export const STOP_QUIZ = 'STOP_QUIZ'
+export const ANSWER_STOP = 'ANSWER_STOP'
 
 // ------------------------------------
 // Actions
@@ -44,9 +44,19 @@ export function quizPublished (payload) {
   }
 }
 
+export function answerStop (payload) {
+  window.socket.emit('answerStop', payload)
+
+  return {
+    type    : ANSWER_STOP,
+    payload
+  }
+}
+
 export const actions = {
   registQuiz,
-  quizPublished
+  quizPublished,
+  answerStop
 }
 
 // ------------------------------------
@@ -68,11 +78,10 @@ const ACTION_HANDLERS = {
     })
   },
   [QUIZ_PUBLISHED]    : (state, action) => {
-    console.log(state, action)
     return state
   },
-  [STOP_QUIZ]     : (state, action) => {
-
+  [ANSWER_STOP]     : (state, action) => {
+    return state
   }
 }
 

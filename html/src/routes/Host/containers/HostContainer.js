@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { quizListGiven, quizPublished } from '../modules/host'
+import { quizListGiven, quizPublished, answerStop } from '../modules/host'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch, getState) => {
     },
     quizPublished: (_id) => {
       dispatch(quizPublished(_id))
+    },
+    answerStop: (_id) => {
+      dispatch(answerStop(_id))
     }
   }
 }
