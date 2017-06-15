@@ -67,7 +67,7 @@ io.on('connection', function (socket) {
       })
   })
 
-   socket.on('quizPublished', function (_id) {
+  socket.on('quizPublished', function (_id) {
     Questions.find({'_id': _id}, function (err, docs) {
       answerlist　= {}
       if (docs) {
@@ -80,6 +80,7 @@ io.on('connection', function (socket) {
   socket.on('answerSubmitted', function (submittedNumber, fn) {
     debugSocket('submittedNumber: ' + submittedNumber)
     _id = '593bfe29c7811f0b6bde8f55'
+
     Questions.find({'_id': _id}, function (err, docs) {
       if (docs) {
         quizinfo = docs[0]
@@ -92,6 +93,11 @@ io.on('connection', function (socket) {
     })
   })
 
+  socket.on('answerStop', function (_id) {
+    debugSocket('answerStop _id is ' + _id)
+    socket.broadcast.to('guest').emit('answerStop')
+  })
+
   socket.on('userRegist', function (userName, fn) {
     _id = new mongoose.Types.ObjectId
     users._id = _id
@@ -101,4 +107,3 @@ io.on('connection', function (socket) {
     })
   })
 })
-
