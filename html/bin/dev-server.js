@@ -24,13 +24,13 @@ debug(`Server is now running at http://localhost:${project.server_port}.`)
 
 // データベースを接続
 mongoose.connect('mongodb://localhost/quiz')
-mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise
 
 io.on('connection', function (socket) {
   debugSocket('connection')
 
-  var users = new Users();
-  var questions = new Questions();
+  var users = new Users()
+  var questions = new Questions()
   
   /**
    * joinRoom
@@ -40,7 +40,7 @@ io.on('connection', function (socket) {
    */
   socket.on('joinRoom', function (roomName) {
     debugSocket('joinRoom to ' + roomName)
-    if (socket.roomName) {
+    if (socket.roomName && socket.roomName !== roomName) {
       debugSocket('room change ' + socket.roomName + ' -> ' + roomName)
       socket.leave(socket.roomName)
     }
@@ -52,40 +52,43 @@ io.on('connection', function (socket) {
 
   socket.on('quizListGiven', function (fn) {
     debugSocket('quizListGiven')
-      // 全問題の出力
-      Questions.find({}, function(err, docs) {
-        var quizlist = [];
-        for (var i=0, size=docs.length; i<size; ++i) {
-          if (docs[i]) {
-            quizlist.push({
-              _id: docs[i]._id, 
-              title: docs[i].title
-            })
-          }
-        }
-        fn(quizlist)
-      })
-  })
 
-  socket.on('quizPublished', function (_id) {
-    Questions.find({'_id': _id}, function (err, docs) {
-      answerlist　= {}
-      if (docs) {
-        answerlist = docs[0]
+    // 全問題の出力
+    Questions.find({}, function(err, docs) {
+      let quizlist = []
+      for (let i = 0, size = docs.length; i < size; ++i) {
+        if (docs[i]) {
+          quizlist.push({
+            _id: docs[i]._id,
+            title: docs[i].title
+          })
+        }
       }
-      socket.broadcast.to('guest').emit('quizPublished', answerlist)
+      fn(quizlist)
     })
   })
 
-  socket.on('answerSubmitted', function (submittedNumber, fn) {
-    debugSocket('submittedNumber: ' + submittedNumber)
-    _id = '593bfe29c7811f0b6bde8f55'
+  socket.on('quizPublished', function (_id) {
+    Questions.find({ '_id': _id }, function (err, docs) {
+      let answerlist = {}
+      if (docs) {
+        answerlist = docs[0]
+      }
+      socket.broadcast.to('guest').emit('quizPublished', answerlist, _id)
+    })
+  })
 
-    Questions.find({'_id': _id}, function (err, docs) {
+  socket.on('answerSubmitted', function (submittedNumber, _id, fn) {
+    debugSocket('submittedNumber: ' + submittedNumber)
+    debugSocket('submittedQuizID: ' + _id)
+
+    Questions.find({ '_id': _id }, function (err, docs) {
+      let quizinfo
+
       if (docs) {
         quizinfo = docs[0]
       }
-      if(quizinfo.correct_answer == submittedNumber) {
+      if (quizinfo.correct_answer === submittedNumber) {
         fn(true)
       } else {
         fn(false)
