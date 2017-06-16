@@ -40,22 +40,22 @@ class GuestView extends React.Component {
               <RadioButton
                 value='1'
                 label={quizItem.answer1}
-                onTouchTap={() => answerSubmitted(1)}
+                onTouchTap={() => answerSubmitted('1', quizItem._id)}
               />
               <RadioButton
                 value='2'
                 label={quizItem.answer2}
-                onTouchTap={() => answerSubmitted(2)}
+                onTouchTap={() => answerSubmitted('2', quizItem._id)}
               />
               <RadioButton
                 value='3'
                 label={quizItem.answer3}
-                onTouchTap={() => answerSubmitted(3)}
+                onTouchTap={() => answerSubmitted('3', quizItem._id)}
               />
               <RadioButton
                 value='4'
                 label={quizItem.answer4}
-                onTouchTap={() => answerSubmitted(4)}
+                onTouchTap={() => answerSubmitted('4', quizItem._id)}
               />
             </RadioButtonGroup>
           </CardActions>

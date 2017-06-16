@@ -14,8 +14,8 @@ import GuestView from '../components/GuestView'
 
 const mapDispatchToProps = (dispatch, getState) => {
   return {
-    answerSubmitted: (submittedNumber) => {
-      dispatch(answerSubmitted(submittedNumber))
+    answerSubmitted: (submittedNumber, _id) => {
+      dispatch(answerSubmitted(submittedNumber, _id))
     },
     showQuizItem: (quizItem) => {
       dispatch(showQuizItem(quizItem))
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch, getState) => {
 
 const mapStateToProps = (state) => {
   return {
-    quizItem: state.guest.quizItem
+    quizItem: state.guest
   }
 }
 

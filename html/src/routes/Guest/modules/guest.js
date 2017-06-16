@@ -19,10 +19,10 @@ export const SHOW_IS_CORRECT_DIALOG = 'SHOW_IS_CORRECT_DIALOG'
 /*  This is a thunk, meaning it is a function that immediately
     returns a function for lazy evaluation. It is incredibly useful for
     creating async actions, especially when combined with redux-thunk! */
-export const answerSubmitted = (submittedNumber) => {
+export const answerSubmitted = (submittedNumber, _id) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      window.socket.emit('answerSubmitted', submittedNumber, (isCorrect) => {
+      window.socket.emit('answerSubmitted', submittedNumber, _id, (isCorrect) => {
         dispatch({
           type    : SET_IS_CORRECT,
           payload : {
@@ -82,62 +82,43 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [SHOW_QUIZ_ITEM]: (state, action) => {
+    let {
+      title,
+      answer1,
+      answer2,
+      answer3,
+      answer4,
+      _id
+    } = action.payload
+
     return Object.assign({}, state, {
-      quizItem: {
-        title        : action.payload.title,
-        answer1      : action.payload.answer1,
-        answer2      : action.payload.answer2,
-        answer3      : action.payload.answer3,
-        answer4      : action.payload.answer4,
-        isSubmitted  : action.payload.isSubmitted,
-        isCorrect    : action.payload.isCorrect,
-        isAnswerStop : action.payload.isAnswerStop
-      }
+      title,
+      answer1,
+      answer2,
+      answer3,
+      answer4,
+      _id,
+      isSubmitted: false,
+      isCorrect: null,
+      isAnswerStop: false
     })
   },
 
   [SHOW_SUBMITTED_DIALOG]: (state, action) => {
     return Object.assign({}, state, {
-      quizItem: {
-        title       : state.quizItem.title,
-        answer1     : state.quizItem.answer1,
-        answer2     : state.quizItem.answer2,
-        answer3     : state.quizItem.answer3,
-        answer4     : state.quizItem.answer4,
-        isSubmitted : action.payload.isSubmitted,
-        isCorrect   : state.quizItem.isCorrect,
-        isAnswerStop: state.quizItem.isAnswerStop
-      }
+      isSubmitted: action.payload.isSubmitted
     })
   },
 
   [SET_IS_CORRECT]: (state, action) => {
     return Object.assign({}, state, {
-      quizItem: {
-        title        : state.quizItem.title,
-        answer1      : state.quizItem.answer1,
-        answer2      : state.quizItem.answer2,
-        answer3      : state.quizItem.answer3,
-        answer4      : state.quizItem.answer4,
-        isSubmitted  : state.quizItem.isSubmitted,
-        isCorrect    : action.payload.isCorrect,
-        isAnswerStop : state.quizItem.isAnswerStop
-      }
+      isCorrect: action.payload.isCorrect
     })
   },
 
   [SHOW_IS_CORRECT_DIALOG]: (state, action) => {
     return Object.assign({}, state, {
-      quizItem: {
-        title        : state.quizItem.title,
-        answer1      : state.quizItem.answer1,
-        answer2      : state.quizItem.answer2,
-        answer3      : state.quizItem.answer3,
-        answer4      : state.quizItem.answer4,
-        isSubmitted  : state.quizItem.isSubmitted,
-        isCorrect    : state.quizItem.isCorrect,
-        isAnswerStop : action.payload.isAnswerStop
-      }
+      isAnswerStop: action.payload.isAnswerStop
     })
   }
 }
@@ -146,16 +127,15 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  quizItem: {
-    title: '',
-    answer1: '',
-    answer2: '',
-    answer3: '',
-    answer4: '',
-    isSubmitted: false,
-    isCorrect: null,
-    isAnswerStop: false
-  }
+  title: '',
+  answer1: '',
+  answer2: '',
+  answer3: '',
+  answer4: '',
+  _id: false,
+  isSubmitted: false,
+  isCorrect: null,
+  isAnswerStop: false
 }
 
 export default function guestReducer (state = initialState, action) {
