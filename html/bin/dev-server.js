@@ -82,21 +82,35 @@ io.on('connection', function (socket) {
     })
   })
 
-  socket.on('answerSubmitted', function (submittedNumber, _id, userId, fn) {
+  socket.on('answerSubmitted', function (submittedNumber, quizId, userId, fn) {
     debugSocket('submittedNumber: ' + submittedNumber)
-    debugSocket('submittedQuizID: ' + _id)
-    debugSocket('userID: ' + userId)
+    debugSocket('submittedquizId: ' + quizId)
+    debugSocket('userId: ' + userId)
 
-    Questions.find({ '_id': _id }, function (err, docs) {
+    //対象問題の検索
+    Questions.find({'_id': quizId }, function (err, docs) {
       let quizinfo
 
       if (docs) {
         quizinfo = docs[0]
-      }
-      if (quizinfo.correct_answer === submittedNumber) {
-        fn(true)
-      } else {
-        fn(false)
+        //正解なら対象ユーザーの正解数をカウントアップ
+        if (quizinfo.correct_answer == submittedNumber) {
+          Users.find({'_id': userId}, function (err, docs) {
+            if (docs) {
+              userinfo = docs[0]
+              Users.update({ '_id': userId },
+              { $set: { correct_answer_count: userinfo.correct_answer_count+1 } },
+              function (err) {
+                if (err) {
+                  console.log('update_fald')
+                }
+              })
+            }
+          })
+          fn(true)
+        } else {
+          fn(false)
+        }
       }
     })
   })

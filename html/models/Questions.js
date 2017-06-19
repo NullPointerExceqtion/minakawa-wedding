@@ -9,7 +9,7 @@ var QuestionsSchema = new Schema({
   answer2: {type: String, default: ""},
   answer3: {type: String, default: ""},
   answer4: {type: String, default: ""},
-  correct_answer: {type: String},
+  correct_answer: {type: Number},
   created: {type: Date, default: Date.now},
   modified: {type: Date, default: Date.now}
 });
