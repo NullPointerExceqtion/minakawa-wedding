@@ -24,7 +24,7 @@ if (project.env === 'development') {
     hot          : true,
     quiet        : project.compiler_quiet,
     noInfo       : project.compiler_quiet,
-    lazy         : false,
+    lazy         : true,
     stats        : project.compiler_stats,
     watchOptions : {
       poll: true

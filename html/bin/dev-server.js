@@ -31,7 +31,7 @@ io.on('connection', function (socket) {
 
   var users = new Users()
   var questions = new Questions()
-  
+
   /**
    * joinRoom
    * guestUser, hostUserはroom分けする
@@ -43,6 +43,10 @@ io.on('connection', function (socket) {
     if (socket.roomName && socket.roomName !== roomName) {
       debugSocket('room change ' + socket.roomName + ' -> ' + roomName)
       socket.leave(socket.roomName)
+    }
+
+    if (socket.roomName === roomName) {
+      return;
     }
 
     socket.roomName = roomName
@@ -78,9 +82,10 @@ io.on('connection', function (socket) {
     })
   })
 
-  socket.on('answerSubmitted', function (submittedNumber, _id, fn) {
+  socket.on('answerSubmitted', function (submittedNumber, _id, userId, fn) {
     debugSocket('submittedNumber: ' + submittedNumber)
     debugSocket('submittedQuizID: ' + _id)
+    debugSocket('userID: ' + userId)
 
     Questions.find({ '_id': _id }, function (err, docs) {
       let quizinfo
@@ -102,7 +107,9 @@ io.on('connection', function (socket) {
   })
 
   socket.on('userRegist', function (userName, fn) {
-    _id = new mongoose.Types.ObjectId
+    debugSocket('userName is ', userName)
+
+    const _id = new mongoose.Types.ObjectId()
     users._id = _id
     users.name = userName
     users.save(function (err) {

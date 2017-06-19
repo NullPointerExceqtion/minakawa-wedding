@@ -19,10 +19,10 @@ export const SHOW_IS_CORRECT_DIALOG = 'SHOW_IS_CORRECT_DIALOG'
 /*  This is a thunk, meaning it is a function that immediately
     returns a function for lazy evaluation. It is incredibly useful for
     creating async actions, especially when combined with redux-thunk! */
-export const answerSubmitted = (submittedNumber, _id) => {
+export const answerSubmitted = (submittedNumber, _id, userId) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      window.socket.emit('answerSubmitted', submittedNumber, _id, (isCorrect) => {
+      window.socket.emit('answerSubmitted', submittedNumber, _id, userId, (isCorrect) => {
         dispatch({
           type    : SET_IS_CORRECT,
           payload : {

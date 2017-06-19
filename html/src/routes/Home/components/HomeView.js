@@ -7,6 +7,7 @@ export const HomeView = () => {
       <ul>
         <li><Link to='/guest'>Guest</Link></li>
         <li><Link to='/host'>Host</Link></li>
+        <li><Link to='/signup'>Signup</Link></li>
       </ul>
     </div>
   )
