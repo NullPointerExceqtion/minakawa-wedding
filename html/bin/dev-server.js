@@ -78,10 +78,7 @@ io.on('connection', function (socket) {
     })
   })
 
-  socket.on('answerSubmitted', function (submittedNumber, quizid, fn) {
-    debugSocket('submittedNumber: ' + submittedNumber)
-    debugSocket('submittedQuizID: ' + quizid)
-    userid = '5942a1e00e081013e813a276' //これはダミー
+  socket.on('answerSubmitted', function (submittedNumber, quizid,　userid, fn) {
 
     //対象問題の検索
     Questions.find({'_id': quizid }, function (err, docs) {
