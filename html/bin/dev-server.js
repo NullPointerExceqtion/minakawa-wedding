@@ -89,6 +89,8 @@ io.on('connection', function (socket) {
         //正解なら対象ユーザーの正解数をカウントアップ
         if (quizinfo.correct_answer == submittedNumber) {
           Users.find({'_id': userId}, function (err, docs) {
+            let userinfo
+            
             if (docs) {
               userinfo = docs[0]
               Users.update({ '_id': userId },
