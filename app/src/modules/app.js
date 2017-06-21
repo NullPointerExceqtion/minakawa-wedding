@@ -22,11 +22,9 @@ export const quizListGiven = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
       window.socket.emit('quizListGiven', (quizItems) => {
-        quizItems.map((quizItem) => {
-          dispatch({
-            type    : REGIST_QUIZ,
-            payload : quizItem
-          })
+        dispatch({
+          type    : REGIST_QUIZ,
+          payload : quizItems
         })
 
         resolve(quizItems)
@@ -70,18 +68,9 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [REGIST_QUIZ]    : (state, action) => {
-    const quizInfo = {
-      _id     : action.payload._id,
-      title   : action.payload.title,
-      answer1 : action.payload.answer1,
-      answer2 : action.payload.answer2,
-      answer3 : action.payload.answer3,
-      answer4 : action.payload.answer4
+    return {
+      quizItems: action.payload
     }
-
-    return Object.assign({}, state, {
-      quizItems: [...state.quizItems, quizInfo]
-    })
   },
   [QUIZ_PUBLISHED] : (state, action) => {
     return state
