@@ -57,7 +57,11 @@ io.on('connection', function (socket) {
         if (docs[i]) {
           quizlist.push({
             _id: docs[i]._id,
-            title: docs[i].title
+            title: docs[i].title,
+            answer1: docs[i].answer1,
+            answer2: docs[i].answer2,
+            answer3: docs[i].answer3,
+            answer4: docs[i].answer4
           })
         }
       }
