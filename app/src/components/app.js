@@ -1,33 +1,29 @@
-import React from 'react'
-import Header from'./Header'
-import DialogContainer from '../container/DialogContainer'
-import QuizList from '../container/QuizList'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { browserHistory, Router } from 'react-router'
+import { Provider } from 'react-redux'
 
-import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-
-class App extends React.Component {
-  static childContextTypes = {
-    muiTheme: React.PropTypes.object
+class AppContainer extends Component {
+  static propTypes = {
+    routes : PropTypes.object.isRequired,
+    store  : PropTypes.object.isRequired
   }
 
-  getChildContext () {
-    return {
-      muiTheme: getMuiTheme(baseTheme)
-    }
+  shouldComponentUpdate () {
+    return false
   }
 
   render () {
+    const { routes, store } = this.props
+
     return (
-      <div>
-        <Header />
-
-        <DialogContainer dialogTitle="出題" />
-
-        <QuizList />
-      </div>
+      <Provider store={store}>
+        <div style={{ height: '100%' }}>
+          <Router history={browserHistory} children={routes} />
+        </div>
+      </Provider>
     )
   }
 }
 
-export default App
+export default AppContainer
