@@ -70,6 +70,8 @@ io.on('connection', function (socket) {
   })
 
   socket.on('quizPublished', function (_id) {
+    debugSocket('quizPublished: ' + _id)
+
     Questions.find({ '_id': _id }, function (err, docs) {
       let answerlist = {}
       if (docs) {

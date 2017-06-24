@@ -4,25 +4,25 @@ import { browserHistory } from 'react-router'
 
 class QuestionView extends React.Component {
   componentDidMount() {
-    const { setQuiz, quizListGiven, quizItems, quizPublished } = this.props
-    const { selectQuizId } = this.props.params
+    const { setSelectedQuizId, quizListGiven, quizItems, quizPublished } = this.props
+    const { selectedQuizId } = this.props.params
 
     if (quizItems.length === 0) {
       quizListGiven().then(() => {
-        setQuiz(selectQuizId)
+        setSelectedQuizId(selectedQuizId)
       })
     } else {
-      setQuiz(selectQuizId)
+      setSelectedQuizId(selectedQuizId)
     }
 
-    quizPublished(selectQuizId)
+    quizPublished(selectedQuizId)
   }
 
   emitAnswerStop(_id) {
     const { answerStop } = this.props
 
     answerStop(_id).then(() => {
-      browserHistory.push(`/host/`)
+      browserHistory.push(`/host/result/${_id}`)
     })
   }
 
@@ -41,7 +41,10 @@ class QuestionView extends React.Component {
               <li>{selectQuizItem.answer4}</li>
             </ul>
 
-            <RaisedButton label='解答締め切り' onTouchTap={() => this.emitAnswerStop(selectQuizItem._id)} />
+            <RaisedButton
+              label='解答締め切り'
+              onTouchTap={() => this.emitAnswerStop(selectQuizItem._id)}
+            />
           </div>
         ) : ''}
       </div>

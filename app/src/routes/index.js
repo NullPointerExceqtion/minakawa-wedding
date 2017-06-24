@@ -7,6 +7,7 @@ import Host from './Host'
 import Guest from './Guest'
 import Signup from './Signup'
 import Question from './Question'
+import Result from './Result'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -19,7 +20,8 @@ export const createRoutes = (store) => ({
     Host(store),
     Guest(store),
     Signup(store),
-    Question(store)
+    Question(store),
+    Result(store)
   ]
 })
 
