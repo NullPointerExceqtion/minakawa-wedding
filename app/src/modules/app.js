@@ -1,9 +1,13 @@
+import { createSelector } from 'reselect'
+
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const REGIST_QUIZ = 'REGIST_QUIZ'
 export const QUIZ_PUBLISHED = 'QUIZ_PUBLISHED'
 export const ANSWER_STOP = 'ANSWER_STOP'
+export const SET_SELECTED_QUIZID = 'SET_SELECTED_QUIZID'
+export const SET_NEXT_QUIZID = 'SET_NEXT_QUIZID'
 
 // ------------------------------------
 // Actions
@@ -56,11 +60,27 @@ export const answerStop = (payload) => {
   }
 }
 
+export const setSelectedQuizId = (payload) => {
+  return {
+    type    : SET_SELECTED_QUIZID,
+    payload
+  }
+}
+
+export const setNextQuizId = (payload) => {
+  return {
+    type    : SET_NEXT_QUIZID,
+    payload
+  }
+}
+
 export const actions = {
   registQuiz,
   quizListGiven,
   quizPublished,
-  answerStop
+  answerStop,
+  setSelectedQuizId,
+  setNextQuizId
 }
 
 // ------------------------------------
@@ -68,15 +88,45 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [REGIST_QUIZ]    : (state, action) => {
-    return {
+    return Object.assign({}, state, {
       quizItems: action.payload
-    }
+    })
   },
   [QUIZ_PUBLISHED] : (state, action) => {
     return state
   },
   [ANSWER_STOP]    : (state, action) => {
     return state
+  },
+  [SET_SELECTED_QUIZID] : (state, action) => {
+    return Object.assign({}, state, {
+      selectedQuizId: action.payload
+    })
+  },
+  [SET_NEXT_QUIZID]     : (state, action) => {
+    const quizItems = state.quizItems
+
+    if (quizItems.length === 0) return state
+
+    const quizItemsIndex = quizItems.length
+    let selectedQuizItemsIndex
+
+    quizItems.forEach((val, index) => {
+      if (val._id === action.payload) {
+        selectedQuizItemsIndex = index
+        return false
+      }
+    })
+
+    if (selectedQuizItemsIndex === quizItemsIndex - 1) {
+      return Object.assign({}, state, {
+        nextQuizId: false
+      })
+    } else {
+      return Object.assign({}, state, {
+        nextQuizId: quizItems[selectedQuizItemsIndex + 1]._id
+      })
+    }
   }
 }
 
@@ -84,7 +134,9 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  quizItems: []
+  quizItems: [],
+  selectedQuizId: false,
+  nextQuizId: false
 }
 
 export default function hostReducer (state = initialState, action) {
@@ -92,3 +144,23 @@ export default function hostReducer (state = initialState, action) {
 
   return handler ? handler(state, action) : state
 }
+
+// ------------------------------------
+// Selector
+// ------------------------------------
+const selectQuizIdSelector = (state) => {
+  return state.app.selectedQuizId
+}
+const quizItemsSelector = (state) => {
+  return state.app.quizItems
+}
+
+export const selectQuizItemSelector = createSelector(
+  [selectQuizIdSelector, quizItemsSelector],
+  (selectQuizId, quizItems) => {
+    const quizItemFilterById = quizItems.filter((quizItem) => {
+      return quizItem._id === selectQuizId
+    })
+    return quizItemFilterById[0]
+  }
+)

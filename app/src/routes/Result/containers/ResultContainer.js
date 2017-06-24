@@ -1,10 +1,7 @@
 import { connect } from 'react-redux'
 import {
-  quizListGiven,
   quizPublished,
-  answerStop,
   setSelectedQuizId,
-  setNextQuizId,
   selectQuizItemSelector
 } from '../../../modules/app'
 
@@ -13,7 +10,7 @@ import {
     wiring in the actions and state necessary to render a presentational
     component - in this case, the counter:   */
 
-import QuestionView from '../components/QuestionView'
+import ResultView from '../components/ResultView'
 
 /*  Object of action creators (can also be function that returns object).
     Keys will be passed as props to presentational components. Here we are
@@ -21,18 +18,8 @@ import QuestionView from '../components/QuestionView'
 
 const mapDispatchToProps = (dispatch, getState) => {
   return {
-    quizListGiven     : () => {
-      return dispatch(quizListGiven())
-    },
-    quizPublished     : (_id) => {
-      dispatch(quizPublished(_id))
-    },
-    answerStop        : (_id) => {
-      return dispatch(answerStop(_id))
-    },
     setSelectedQuizId : (selectedQuizId) => {
       dispatch(setSelectedQuizId(selectedQuizId))
-      dispatch(setNextQuizId(selectedQuizId))
     }
   }
 }
@@ -40,7 +27,8 @@ const mapDispatchToProps = (dispatch, getState) => {
 const mapStateToProps = (state) => {
   return {
     quizItems      : state.app.quizItems,
-    selectQuizItem : selectQuizItemSelector(state)
+    selectQuizItem : selectQuizItemSelector(state),
+    nextQuizId     : state.app.nextQuizId
   }
 }
 
@@ -58,4 +46,4 @@ const mapStateToProps = (state) => {
     Selectors are composable. They can be used as input to other selectors.
     https://github.com/reactjs/reselect    */
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuestionView)
+export default connect(mapStateToProps, mapDispatchToProps)(ResultView)
