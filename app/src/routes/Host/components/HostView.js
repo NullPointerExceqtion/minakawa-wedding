@@ -1,5 +1,5 @@
 import React from 'react'
-import QuizList from '../../../components/QuizList'
+import RaisedButton from 'material-ui/RaisedButton'
 
 class HostView extends React.Component {
   componentDidMount() {
@@ -10,14 +10,13 @@ class HostView extends React.Component {
   }
 
   render () {
-    const {quizItems, nextQuizPublished, answerStop} = this.props
+    const {nextQuizPublished} = this.props
 
     return (
       <div>
-        <QuizList
-          quizItems={quizItems}
+        <RaisedButton
+          label='START!!!'
           onTouchTap={nextQuizPublished}
-          answerStop={answerStop}
         />
       </div>
     )

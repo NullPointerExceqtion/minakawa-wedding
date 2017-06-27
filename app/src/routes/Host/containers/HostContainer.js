@@ -22,17 +22,12 @@ const mapDispatchToProps = (dispatch, state) => {
       return dispatch(nextQuizPublished()).then((nextQuizId) => {
         browserHistory.push(`/host/question/${nextQuizId}`)
       })
-    },
-    answerStop: (_id) => {
-      dispatch(answerStop(_id))
     }
   }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    quizItems: state.app.quizItems
-  }
+  return {}
 }
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
