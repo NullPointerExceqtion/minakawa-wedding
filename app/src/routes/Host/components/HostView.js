@@ -10,13 +10,13 @@ class HostView extends React.Component {
   }
 
   render () {
-    const {quizItems, quizPublished, answerStop} = this.props
+    const {quizItems, nextQuizPublished, answerStop} = this.props
 
     return (
       <div>
         <QuizList
           quizItems={quizItems}
-          quizPublished={quizPublished}
+          onTouchTap={nextQuizPublished}
           answerStop={answerStop}
         />
       </div>

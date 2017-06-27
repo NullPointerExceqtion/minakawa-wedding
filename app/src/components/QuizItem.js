@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router'
 
 class QuizListiItem extends React.Component {
   render() {
-    const {title, _id, quizPublished, answerStop} = this.props
+    const {title, _id, onTouchTap, answerStop} = this.props
 
     return (
       <Card>
@@ -13,9 +13,7 @@ class QuizListiItem extends React.Component {
           title={title}
         />
         <CardActions>
-          <FlatButton label='開始' onTouchTap={() => {
-            browserHistory.push(`/host/question/${_id}`)
-          }} />
+          <FlatButton label='開始' onTouchTap={onTouchTap} />
           <FlatButton label='解答締め切り' onTouchTap={() => answerStop(_id)} />
         </CardActions>
       </Card>

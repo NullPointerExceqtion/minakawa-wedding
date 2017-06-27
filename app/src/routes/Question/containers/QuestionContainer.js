@@ -24,15 +24,8 @@ const mapDispatchToProps = (dispatch, getState) => {
     quizListGiven     : () => {
       return dispatch(quizListGiven())
     },
-    quizPublished     : (_id) => {
-      dispatch(quizPublished(_id))
-    },
     answerStop        : (_id) => {
       return dispatch(answerStop(_id))
-    },
-    setSelectedQuizId : (selectedQuizId) => {
-      dispatch(setSelectedQuizId(selectedQuizId))
-      dispatch(setNextQuizId(selectedQuizId))
     }
   }
 }

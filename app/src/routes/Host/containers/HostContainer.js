@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { quizListGiven, quizPublished, answerStop } from '../../../modules/app'
+import { quizListGiven, nextQuizPublished, answerStop } from '../../../modules/app'
+import { browserHistory } from 'react-router'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -12,13 +13,15 @@ import HostView from '../components/HostView'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = (dispatch, getState) => {
+const mapDispatchToProps = (dispatch, state) => {
   return {
     quizListGiven: () => {
       return dispatch(quizListGiven())
     },
-    quizPublished: (_id) => {
-      dispatch(quizPublished(_id))
+    nextQuizPublished: (_id) => {
+      return dispatch(nextQuizPublished()).then((nextQuizId) => {
+        browserHistory.push(`/host/question/${nextQuizId}`)
+      })
     },
     answerStop: (_id) => {
       dispatch(answerStop(_id))
