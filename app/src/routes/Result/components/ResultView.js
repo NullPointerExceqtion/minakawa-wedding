@@ -1,8 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton'
-import { browserHistory } from 'react-router'
 
 class ResultView extends React.Component {
+  static propTypes = {
+    nextQuizId        : PropTypes.string.isRequired,
+    selectQuizItem    : PropTypes.object.isRequired,
+    nextQuizPublished : PropTypes.func
+  }
+
   render () {
     const { selectQuizItem, nextQuizId, nextQuizPublished } = this.props
 

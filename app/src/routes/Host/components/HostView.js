@@ -1,16 +1,22 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton'
 
 class HostView extends React.Component {
-  componentDidMount() {
+  static propTypes = {
+    quizListGiven     : PropTypes.func,
+    nextQuizPublished : PropTypes.func
+  }
+
+  componentDidMount () {
     socket.emit('joinRoom', 'host')
 
-    const {quizListGiven} = this.props
+    const { quizListGiven } = this.props
     quizListGiven()
   }
 
   render () {
-    const {nextQuizPublished} = this.props
+    const { nextQuizPublished } = this.props
 
     return (
       <div>
