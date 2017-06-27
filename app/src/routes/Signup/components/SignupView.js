@@ -1,10 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FullWindowCircleProgress from '../../../components/FullWindowCircleProgress/fullWindowCircleProgress.js'
 import { browserHistory } from 'react-router'
 
 class SignupView extends React.Component {
+  static propTypes = {
+    userRegist : PropTypes.func
+  }
+
   constructor (props) {
     super(props)
 

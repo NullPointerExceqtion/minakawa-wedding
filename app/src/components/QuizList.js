@@ -3,7 +3,7 @@ import QuizItem from './QuizItem'
 
 class QuizList extends React.Component {
   render() {
-    const {quizItems, quizPublished, answerStop} = this.props
+    const {quizItems, onTouchTap, answerStop} = this.props
 
     return (
       <div>
@@ -13,7 +13,7 @@ class QuizList extends React.Component {
               key={i}
               _id={quizItem._id}
               title={quizItem.title}
-              quizPublished={quizPublished}
+              onTouchTap={onTouchTap}
               answerStop={answerStop}
             />
           )

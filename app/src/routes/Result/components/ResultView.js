@@ -1,17 +1,16 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton'
-import { browserHistory } from 'react-router'
 
 class ResultView extends React.Component {
-  componentDidMount() {
-    const { setSelectedQuizId } = this.props
-    const { selectedQuizId } = this.props.params
-    setSelectedQuizId(selectedQuizId)
+  static propTypes = {
+    nextQuizId        : PropTypes.string.isRequired,
+    selectQuizItem    : PropTypes.object.isRequired,
+    nextQuizPublished : PropTypes.func
   }
 
   render () {
-    const { selectQuizItem, nextQuizId } = this.props
-    console.log(selectQuizItem, nextQuizId)
+    const { selectQuizItem, nextQuizId, nextQuizPublished } = this.props
 
     return (
       <div>
@@ -23,7 +22,7 @@ class ResultView extends React.Component {
 
               <RaisedButton
                 label='次の問題へ'
-                onTouchTap={() => browserHistory.push(`/host/question/${nextQuizId}`)}
+                onTouchTap={nextQuizPublished}
               />
             </div>
           ) : '' : (

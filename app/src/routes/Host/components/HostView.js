@@ -1,23 +1,28 @@
 import React from 'react'
-import QuizList from '../../../components/QuizList'
+import PropTypes from 'prop-types'
+import RaisedButton from 'material-ui/RaisedButton'
 
 class HostView extends React.Component {
-  componentDidMount() {
+  static propTypes = {
+    quizListGiven     : PropTypes.func,
+    nextQuizPublished : PropTypes.func
+  }
+
+  componentDidMount () {
     socket.emit('joinRoom', 'host')
 
-    const {quizListGiven} = this.props
+    const { quizListGiven } = this.props
     quizListGiven()
   }
 
   render () {
-    const {quizItems, quizPublished, answerStop} = this.props
+    const { nextQuizPublished } = this.props
 
     return (
       <div>
-        <QuizList
-          quizItems={quizItems}
-          quizPublished={quizPublished}
-          answerStop={answerStop}
+        <RaisedButton
+          label='START!!!'
+          onTouchTap={nextQuizPublished}
         />
       </div>
     )

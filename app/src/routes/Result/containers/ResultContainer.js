@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import {
-  quizPublished,
-  setSelectedQuizId,
-  selectQuizItemSelector
+  selectQuizItemSelector,
+  nextQuizPublished
 } from '../../../modules/app'
+import { browserHistory } from 'react-router'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -18,8 +18,10 @@ import ResultView from '../components/ResultView'
 
 const mapDispatchToProps = (dispatch, getState) => {
   return {
-    setSelectedQuizId : (selectedQuizId) => {
-      dispatch(setSelectedQuizId(selectedQuizId))
+    nextQuizPublished: (_id) => {
+      return dispatch(nextQuizPublished()).then((nextQuizId) => {
+        browserHistory.push(`/host/question/${nextQuizId}`)
+      })
     }
   }
 }

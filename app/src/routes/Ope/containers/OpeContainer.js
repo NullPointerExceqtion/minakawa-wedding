@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { quizListGiven, nextQuizPublished, answerStop } from '../../../modules/app'
+import { quizListGiven, quizPublished, nextQuizPublished, answerStop } from '../../../modules/app'
 import { browserHistory } from 'react-router'
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router'
     wiring in the actions and state necessary to render a presentational
     component - in this case, the counter:   */
 
-import HostView from '../components/HostView'
+import OpeView from '../components/OpeView'
 
 /*  Object of action creators (can also be function that returns object).
     Keys will be passed as props to presentational components. Here we are
@@ -15,19 +15,22 @@ import HostView from '../components/HostView'
 
 const mapDispatchToProps = (dispatch, state) => {
   return {
-    quizListGiven: () => {
+    quizListGiven : () => {
       return dispatch(quizListGiven())
     },
-    nextQuizPublished: (_id) => {
-      return dispatch(nextQuizPublished()).then((nextQuizId) => {
-        browserHistory.push(`/host/question/${nextQuizId}`)
-      })
+    quizPublished : (quizId) => {
+      return dispatch(quizPublished(quizId))
+    },
+    answerStop    : (quizId) => {
+      return dispatch(answerStop(quizId))
     }
   }
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    quizItems: state.app.quizItems
+  }
 }
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
@@ -44,4 +47,4 @@ const mapStateToProps = (state) => {
     Selectors are composable. They can be used as input to other selectors.
     https://github.com/reactjs/reselect    */
 
-export default connect(mapStateToProps, mapDispatchToProps)(HostView)
+export default connect(mapStateToProps, mapDispatchToProps)(OpeView)

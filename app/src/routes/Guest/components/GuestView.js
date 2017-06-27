@@ -1,11 +1,19 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import { Card, CardActions, CardTitle } from 'material-ui/Card'
 
 class GuestView extends React.Component {
-  componentDidMount() {
-    const {showQuizItem, answerSubmitted, showSubmittedDialog, showIsCorrectDialog} = this.props
+  static propTypes = {
+    answerSubmitted     : PropTypes.func,
+    showQuizItem        : PropTypes.func,
+    showIsCorrectDialog : PropTypes.func,
+    quizItem            : PropTypes.object.isRequired,
+    userInfo            : PropTypes.object.isRequired
+  }
+
+  componentDidMount () {
+    const { showQuizItem, showIsCorrectDialog } = this.props
     window.socket.emit('joinRoom', 'guest')
 
     window.socket.on('quizPublished', (quizItem) => {
@@ -19,8 +27,8 @@ class GuestView extends React.Component {
     })
   }
 
-  render() {
-    const {answerSubmitted, quizItem, userInfo} = this.props
+  render () {
+    const { answerSubmitted, quizItem, userInfo } = this.props
     let renderElement = ''
 
     if (quizItem.isAnswerStop) {

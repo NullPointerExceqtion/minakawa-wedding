@@ -37,12 +37,54 @@ export const quizListGiven = () => {
   }
 }
 
-export function quizPublished (payload) {
-  window.socket.emit('quizPublished', payload)
+export const quizPublished = (payload) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      window.socket.emit('quizPublished', payload)
+      dispatch({
+        type    : QUIZ_PUBLISHED,
+        payload
+      })
 
-  return {
-    type    : QUIZ_PUBLISHED,
-    payload
+      dispatch({
+        type    : SET_SELECTED_QUIZID,
+        payload
+      })
+
+      dispatch({
+        type    : SET_NEXT_QUIZID,
+        payload
+      })
+
+      resolve()
+    })
+  }
+}
+
+export const nextQuizPublished = () => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      const state = getState()
+      const promises = []
+
+      if (state.app.quizItems.length === 0) {
+        promises.push(quizListGiven())
+      }
+
+      Promise.all(promises).then((values) => {
+        let payloadQuizId
+
+        if (!state.app.nextQuizId) {
+          payloadQuizId = state.app.quizItems[0]._id
+        } else {
+          payloadQuizId = state.app.nextQuizId
+        }
+
+        dispatch(quizPublished(payloadQuizId)).then(() => {
+          resolve(payloadQuizId)
+        })
+      })
+    })
   }
 }
 

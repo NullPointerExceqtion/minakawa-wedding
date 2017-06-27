@@ -1,24 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton'
 import { browserHistory } from 'react-router'
 
 class QuestionView extends React.Component {
-  componentDidMount() {
-    const { setSelectedQuizId, quizListGiven, quizItems, quizPublished } = this.props
-    const { selectedQuizId } = this.props.params
-
-    if (quizItems.length === 0) {
-      quizListGiven().then(() => {
-        setSelectedQuizId(selectedQuizId)
-      })
-    } else {
-      setSelectedQuizId(selectedQuizId)
-    }
-
-    quizPublished(selectedQuizId)
+  static propTypes = {
+    answerStop     : PropTypes.func,
+    selectQuizItem : PropTypes.object.isRequired
   }
 
-  emitAnswerStop(_id) {
+  emitAnswerStop (_id) {
     const { answerStop } = this.props
 
     answerStop(_id).then(() => {
