@@ -13,7 +13,7 @@ class QuizListiItem extends React.Component {
           title={title}
         />
         <CardActions>
-          <FlatButton label='開始' onTouchTap={onTouchTap} />
+          <FlatButton label='開始' onTouchTap={() => onTouchTap(_id)} />
           <FlatButton label='解答締め切り' onTouchTap={() => answerStop(_id)} />
         </CardActions>
       </Card>
