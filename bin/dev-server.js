@@ -16,7 +16,7 @@ http.listen(project.server_port)
 debug(`Server is now running at http://localhost:${project.server_port}.`)
 
 // データベースを接続
-mongoose.connect('mongodb://minakawa:wedding0722@ds141082.mlab.com:41082/nullpon/')
+mongoose.connect('mongodb://minakawa:wedding0722@ds141082.mlab.com:41082/heroku_3g8w655/')
 mongoose.Promise = global.Promise
 
 io.on('connection', function (socket) {
