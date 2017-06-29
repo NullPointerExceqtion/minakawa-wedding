@@ -5,7 +5,7 @@ const Questions = require('../models/Questions')
  */
 mongoose.Promise = global.Promise
 
-mongoose.connect('mongodb://localhost/quiz')
+mongoose.connect('mongodb://heroku_7m70fbv9:10cb4sngheuhclogorf9g4snbb@ds141082.mlab.com:41082/heroku_7m70fbv9')
 
 function saveQuestionsDocs(questionData) {
   return new Promise(function(resolve, reject) {
