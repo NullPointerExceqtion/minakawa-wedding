@@ -22,9 +22,9 @@ if (project.env === 'development') {
     publicPath   : webpackConfig.output.publicPath,
     contentBase  : project.paths.client(),
     hot          : true,
+    lazy         : true,
     quiet        : project.compiler_quiet,
     noInfo       : project.compiler_quiet,
-    lazy         : true,
     stats        : project.compiler_stats,
     watchOptions : {
       poll: true
