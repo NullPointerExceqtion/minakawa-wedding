@@ -53,7 +53,7 @@ const initialState = {
   userId: ''
 }
 
-export default function hostReducer (state = initialState, action) {
+export default function signupReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

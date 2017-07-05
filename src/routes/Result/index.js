@@ -6,19 +6,19 @@ export default (store) => ({
   getComponent (nextState, cb) {
     /*  Webpack - use 'require.ensure' to create a split point
         and embed an async module loader (jsonp) when bundling   */
-    require.ensure([], (require) => {
+    // require.ensure([], (require) => {
       /*  Webpack - use require callback to define
           dependencies for bundling   */
       const Result = require('./containers/ResultContainer').default
-      const reducer = require('./modules/result').default
+      // const reducer = require('./modules/result').default
 
       /*  Add the reducer to the store on key 'result'  */
-      injectReducer(store, { key: 'result', reducer })
+      // injectReducer(store, { key: 'result', reducer })
 
       /*  Return getComponent   */
       cb(null, Result)
 
     /* Webpack named bundle   */
-    }, 'result')
+    // }, 'result')
   }
 })
