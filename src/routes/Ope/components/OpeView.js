@@ -1,5 +1,6 @@
 import React from 'react'
 import QuizList from '../../../components/QuizList'
+import RaisedButton from 'material-ui/RaisedButton'
 
 class HostView extends React.Component {
   componentDidMount() {
@@ -9,8 +10,12 @@ class HostView extends React.Component {
     quizListGiven()
   }
 
+  clearStorage () {
+    localStorage.clear()
+  }
+
   render () {
-    const {quizItems, quizPublished, answerStop} = this.props
+    const { quizItems, quizPublished, answerStop } = this.props
 
     return (
       <div>
@@ -19,6 +24,8 @@ class HostView extends React.Component {
           onTouchTap={quizPublished}
           answerStop={answerStop}
         />
+
+        <RaisedButton label='Clear Storage' onTouchTap={this.clearStorage} />
       </div>
     )
   }
