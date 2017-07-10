@@ -50,16 +50,14 @@ class QuestionView extends React.Component {
     const { selectQuizItem } = this.props
     const { progressTimeOfCowntDown } = this.state
 
-    console.log(selectQuizItem)
-
     return (
       <div className="questionContainer">
         {selectQuizItem ? (
           <div>
             <div className="questionNumber">Q1</div>
 
-            <div className="questionInfoBox">
-              <p className="questionInfoBox__tx">{selectQuizItem.body}</p>
+            <div className="textBox">
+              <p className="textBox__tx">{selectQuizItem.body}</p>
             </div>
 
             <div className="progressTimeOfCowntDown">

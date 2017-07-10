@@ -4,33 +4,6 @@
     height: 100%;
 }
 
-// Q1 ~
-.questionNumber {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    color: #FFFFFF;
-    letter-spacing: -2.7px;
-    font-size: 94px;
-    transform: rotate(-16deg);
-    font-weight: 900;
-}
-
-// 問題テキスト
-.questionInfoBox {
-    position: absolute;
-    margin: auto;
-    top: 132px;
-    left: 0;
-    right: 0;
-    width: 864px;
-}
-.questionInfoBox__tx {
-    color: #fff;
-    font-size: 48px;
-    line-height: 60px;
-}
-
 // カウントダウン
 .progressTimeOfCowntDown {
     position: absolute;

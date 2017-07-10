@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import RaisedButton from 'material-ui/RaisedButton'
+import ButtonFlat from '../../../components/ButtonFlat'
+
+import './ResultView.scss'
 
 class ResultView extends React.Component {
   static propTypes = {
@@ -13,20 +15,28 @@ class ResultView extends React.Component {
     const { selectQuizItem, nextQuizId, nextQuizPublished } = this.props
 
     return (
-      <div>
+      <div className="resultContainer">
         {
           nextQuizId
           ? selectQuizItem ? (
             <div>
-              <p>正解をここにひょうじ</p>
+              <div className="questionNumber">Q1</div>
 
-              <RaisedButton
-                label='次の問題へ'
-                onTouchTap={nextQuizPublished}
-              />
+              <div className="textBox textBox--large">
+                <p className="textBox__tx">{ selectQuizItem.description }</p>
+              </div>
+
+              <div className="nextButton">
+                <ButtonFlat
+                  label='NEXT'
+                  onTouchTap={ nextQuizPublished }
+                />
+              </div>
             </div>
           ) : '' : (
-            <p>終わり</p>
+            <div className="textBox textBox--large">
+              <p className="textBox__tx">終わり!</p>
+            </div>
           )
         }
       </div>
