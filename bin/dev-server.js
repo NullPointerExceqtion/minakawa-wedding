@@ -16,12 +16,12 @@ http.listen(project.server_port)
 debug(`Server is now running at http://localhost:${project.server_port}.`)
 
 // データベースを接続
-if (project.env.NODE_ENV === 'development') {
+mongoose.Promise = global.Promise
+if (project.env === 'development') {
   mongoose.connect('mongodb://localhost/quiz')
 } else {
   mongoose.connect('mongodb://heroku_7m70fbv9:10cb4sngheuhclogorf9g4snbb@ds141082.mlab.com:41082/heroku_7m70fbv9')
 }
-mongoose.Promise = global.Promise
 
 io.on('connection', function (socket) {
   debugSocket('connection')
@@ -61,11 +61,16 @@ io.on('connection', function (socket) {
         if (docs[i]) {
           quizlist.push({
             _id: docs[i]._id,
-            title: docs[i].title,
+            body: docs[i].body,
+            type: docs[i].type,
+            image_path1: docs[i].image_path1,
+            image_path2: docs[i].image_path2,
+            image_path3: docs[i].image_path3,
             answer1: docs[i].answer1,
             answer2: docs[i].answer2,
             answer3: docs[i].answer3,
-            answer4: docs[i].answer4
+            answer4: docs[i].answer4,
+            description: docs[i].description,
           })
         }
       }
