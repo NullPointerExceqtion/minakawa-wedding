@@ -140,4 +140,23 @@ io.on('connection', function (socket) {
       fn(_id)
     })
   })
+
+  socket.on('resultAnnouncement', function (fn) {
+    debugSocket('resultAnnouncement')
+
+    // 各ユーザーの正解数
+    Users.find({}, function(err, docs) {
+      let resultlist = []
+      for (let i = 0, size = docs.length; i < size; ++i) {
+        if (docs[i]) {
+          resultlist.push({
+            _id: docs[i]._id,
+            name: docs[i].name,
+            correct_answer_count: docs[i].correct_answer_count
+          })
+        }
+      }
+      fn(resultlist)
+    })
+  })
 })
