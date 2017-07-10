@@ -5,6 +5,8 @@ import { browserHistory } from 'react-router'
 
 import cowntDownCreator from '../modules/cowntDownCreator.js'
 
+import './QuestionView.scss'
+
 class QuestionView extends React.Component {
   static propTypes = {
     answerStop     : PropTypes.func,
@@ -12,8 +14,8 @@ class QuestionView extends React.Component {
   }
 
   state = {
-    finishTime              : 5,
-    progressTimeOfCowntDown : 5
+    finishTime              : 10,
+    progressTimeOfCowntDown : 10
   }
 
   emitAnswerStop (_id) {
@@ -48,24 +50,22 @@ class QuestionView extends React.Component {
     const { selectQuizItem } = this.props
     const { progressTimeOfCowntDown } = this.state
 
+    console.log(selectQuizItem)
+
     return (
-      <div>
+      <div className="questionContainer">
         {selectQuizItem ? (
           <div>
-            <h1>{selectQuizItem.title}</h1>
-            <ul>
-              <li>{selectQuizItem.answer1}</li>
-              <li>{selectQuizItem.answer2}</li>
-              <li>{selectQuizItem.answer3}</li>
-              <li>{selectQuizItem.answer4}</li>
-            </ul>
+            <div className="questionNumber">Q1</div>
 
-            <p>{progressTimeOfCowntDown}</p>
+            <div className="questionInfoBox">
+              <p className="questionInfoBox__tx">{selectQuizItem.body}</p>
+            </div>
 
-            <RaisedButton
-              label='解答締め切り'
-              onTouchTap={() => this.emitAnswerStop(selectQuizItem._id)}
-            />
+            <div className="progressTimeOfCowntDown">
+              <span className="progressTimeOfCowntDown__subTx">残り</span>
+              {progressTimeOfCowntDown}
+            </div>
           </div>
         ) : ''}
       </div>
