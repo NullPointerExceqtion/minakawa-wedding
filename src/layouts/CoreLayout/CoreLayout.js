@@ -4,7 +4,10 @@ import PropTypes from 'prop-types'
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import Header from '../../components/Header'
+import './CoreLayout.scss'
+
+// const font = "'Arial', 'Mplus 1p'"
+const font = "'Mplus 1p'"
 
 class CoreLayout extends React.Component {
   static childContextTypes = {
@@ -13,7 +16,9 @@ class CoreLayout extends React.Component {
 
   getChildContext () {
     return {
-      muiTheme: getMuiTheme(baseTheme)
+      muiTheme: getMuiTheme({
+        fontFamily: font
+      })
     }
   }
 
@@ -22,8 +27,6 @@ class CoreLayout extends React.Component {
 
     return (
       <div>
-        <Header />
-
         <div className='core-layout__viewport'>
           {children}
         </div>
