@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from '../../../components/Button'
+
+import './HostView.scss'
 
 class HostView extends React.Component {
   static propTypes = {
@@ -19,11 +21,10 @@ class HostView extends React.Component {
     const { nextQuizPublished } = this.props
 
     return (
-      <div>
-        <RaisedButton
-          label='START!!!'
-          onTouchTap={nextQuizPublished}
-        />
+      <div className="hostContainer">
+        <img className="hostContainer__logo" src="/img/img_logo_pc.png" width="761" height="351" />
+
+        <Button label='START' onTouchTap={ nextQuizPublished }></Button>
       </div>
     )
   }
