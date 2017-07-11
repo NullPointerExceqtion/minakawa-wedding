@@ -25,6 +25,7 @@ body {
     font-family: 'arial', 'Mplus 1p';
 }
 .core-layout__viewport {
+    position: relative;
     width: 100vw;
     height: 100vh;
     background-image: url(/img/img_bg_pc.png);
@@ -73,6 +74,12 @@ body {
     font-size: 94px;
     transform: rotate(-16deg);
     font-weight: 900;
+
+    @include mq(md) {
+        top: 5px;
+        left: 15px;
+        font-size: 56px;
+    }
 }
 
 // 問題テキスト

@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
-import { Card, CardActions, CardTitle } from 'material-ui/Card'
+
+import './GuestView.scss'
+
+import Button from '../../../components/Button'
 
 class GuestView extends React.Component {
   static propTypes = {
@@ -10,6 +13,11 @@ class GuestView extends React.Component {
     showIsCorrectDialog : PropTypes.func,
     quizItem            : PropTypes.object.isRequired,
     userInfo            : PropTypes.object.isRequired
+  }
+
+  state = {
+    selectedRadio       : false,
+    selectedRadioNumber : false
   }
 
   componentDidMount () {
@@ -27,9 +35,36 @@ class GuestView extends React.Component {
     })
   }
 
+  onChange (selectedRadio) {
+    if(selectedRadio === false) {
+      this.setState({
+        selectedRadio: true
+      })
+    }
+  }
+
+  answerSubmitted(_id, userId) {
+    const { answerSubmitted } = this.props
+    const selectedNumber = this.refs.radioButtonGroup.state.selected
+
+    answerSubmitted(selectedNumber, _id, userId)
+  }
+
   render () {
-    const { answerSubmitted, quizItem, userInfo } = this.props
+    const { quizItem, userInfo } = this.props
+    const { selectedRadio } = this.state
+    const radioGroupClassName = selectedRadio === false ? 'answerBox' : 'answerBox answerBox--selected'
+
     let renderElement = ''
+
+    const uncheckedIcon = (number) => (
+      <div className="answerBox__icon answerBox__icon--unchecked">{number}</div>
+    )
+    const checkedIcon = () => (
+      <div className="answerBox__icon answerBox__icon--checked">
+        <img src="/img/img_check.png" width="30" height="auto" />
+      </div>
+    )
 
     if (quizItem.isAnswerStop) {
       if (quizItem.isCorrect) {
@@ -40,39 +75,54 @@ class GuestView extends React.Component {
     } else if (quizItem.isSubmitted) {
       renderElement = <p>回答済みです</p>
     } else if (quizItem.title) {
+      let radioButtonItems = [1, 2, 3, 4].map((val, index) =>
+        <RadioButton
+          className='answerBox__item'
+          label={quizItem[`answer${val}`]}
+
+          style={{
+            marginBottom: '6px'
+          }}
+
+          labelStyle={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            lineHeight: 1,
+            color: '#fff'
+          }}
+
+          value={val}
+
+          key={val}
+
+          uncheckedIcon={uncheckedIcon(val)}
+          checkedIcon={checkedIcon()}
+
+        />
+      )
+
       renderElement = (
-        <Card>
-          <CardTitle title={quizItem.title} />
-          <CardActions>
-            <RadioButtonGroup name='answer'>
-              <RadioButton
-                value='1'
-                label={quizItem.answer1}
-                onTouchTap={() => answerSubmitted('1', quizItem._id, userInfo.userId)}
-              />
-              <RadioButton
-                value='2'
-                label={quizItem.answer2}
-                onTouchTap={() => answerSubmitted('2', quizItem._id, userInfo.userId)}
-              />
-              <RadioButton
-                value='3'
-                label={quizItem.answer3}
-                onTouchTap={() => answerSubmitted('3', quizItem._id, userInfo.userId)}
-              />
-              <RadioButton
-                value='4'
-                label={quizItem.answer4}
-                onTouchTap={() => answerSubmitted('4', quizItem._id, userInfo.userId)}
-              />
-            </RadioButtonGroup>
-          </CardActions>
-        </Card>
+        <div>
+          <RadioButtonGroup
+            name='guestAnswer'
+            className={ radioGroupClassName }
+            onChange={ () => this.onChange(selectedRadio) }
+            ref='radioButtonGroup'
+          >
+            { radioButtonItems }
+          </RadioButtonGroup>
+
+          <div className='answerButtonContainer'>
+            <p className='answerButtonContainer__tx'>正解を選んでタップしてね!</p>
+            <Button label='OK' onTouchTap={() => this.answerSubmitted(quizItem._id, userInfo.userId)} disabled={!selectedRadio}></Button>
+          </div>
+        </div>
       )
     }
 
     return (
-      <div>
+      <div className="guestContainer">
+        <div className="questionNumber">Q1</div>
         {renderElement}
       </div>
     )
