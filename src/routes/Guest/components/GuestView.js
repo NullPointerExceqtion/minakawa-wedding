@@ -16,8 +16,7 @@ class GuestView extends React.Component {
   }
 
   state = {
-    selectedRadio       : false,
-    selectedRadioNumber : false
+    selectedRadio       : false
   }
 
   componentDidMount () {
@@ -25,6 +24,7 @@ class GuestView extends React.Component {
     window.socket.emit('joinRoom', 'guest')
 
     window.socket.on('quizPublished', (quizItem) => {
+      this.resetState()
       showQuizItem(quizItem)
     })
 
@@ -50,6 +50,12 @@ class GuestView extends React.Component {
     answerSubmitted(selectedNumber, _id, userId)
   }
 
+  resetState() {
+    this.setState({
+      selectedRadio: false
+    })
+  }
+
   render () {
     const { quizItem, userInfo } = this.props
     const { selectedRadio } = this.state
@@ -66,14 +72,37 @@ class GuestView extends React.Component {
       </div>
     )
 
+    const resultElementTitle = {
+      answer: '回答しました',
+      correct: '正解！',
+      incorrect: 'はずれ..'
+    }
+    const resultElementText = {
+      answer: '回答発表までしばし待たれよ！',
+      correct: 'おめでとうございます！',
+      incorrect: 'どんまい！がんばろう！'
+    }
+    const resultElement = (type) => (
+      <div className="resultContainer">
+        <img src={`/img/img_${type}.png`} width="180" height="180"/>
+        <h1 className="resultContainer__ttl">{resultElementTitle[type]}</h1>
+        <p className="resultContainer__tx">{resultElementText[type]}</p>
+
+        <div className="logo-sm logo-sm--lowerRight">
+          <img src="/img/img_logo_sp.png" width="97" height="auto"/>
+        </div>
+
+      </div>
+    )
+
     if (quizItem.isAnswerStop) {
       if (quizItem.isCorrect) {
-        renderElement = <p>正解です</p>
+        renderElement = resultElement('correct')
       } else {
-        renderElement = <p>不正解です</p>
+        renderElement = resultElement('incorrect')
       }
     } else if (quizItem.isSubmitted) {
-      renderElement = <p>回答済みです</p>
+      renderElement = resultElement('answer')
     } else if (quizItem.title) {
       let radioButtonItems = [1, 2, 3, 4].map((val, index) =>
         <RadioButton
