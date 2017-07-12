@@ -1,9 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import Button from '../../../components/Button'
 import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
 import FullWindowCircleProgress from '../../../components/FullWindowCircleProgress/fullWindowCircleProgress.js'
 import { browserHistory } from 'react-router'
+
+
+import './SignupView.scss'
 
 class SignupView extends React.Component {
   static propTypes = {
@@ -14,9 +18,9 @@ class SignupView extends React.Component {
     super(props)
 
     this.state = {
-      userName: '',
       errorText: '',
-      isProgressShow: false
+      isProgressShow: false,
+      isNormalUserName: false
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -28,29 +32,27 @@ class SignupView extends React.Component {
   }
 
   handleChange (e) {
-    const userName = e.target.value
-
-    this.setState({
-      userName
-    })
+    const userName = this.refs.userName.input.value
 
     if (userName.length === 0) {
       this.setState({
-        errorText: '名前が入力されていません!'
+        errorText        : 'ハンドルネームが入力されていません!',
+        isNormalUserName : false
       })
     } else {
       this.setState({
-        errorText: ''
+        errorText        : '',
+        isNormalUserName : true
       })
     }
   }
 
   handleSubmit (e) {
-    const { userName } = this.state
+    const userName = this.refs.userName.input.value
     const { userRegist } = this.props
 
     if (userName.length === 0) {
-      this.handleChange()
+      this.handleChange(userNameRef)
       return
     }
 
@@ -72,17 +74,55 @@ class SignupView extends React.Component {
   }
 
   render () {
-    const { errorText, isProgressShow } = this.state
+    const { errorText, isProgressShow, isNormalUserName } = this.state
 
     return (
-      <div>
+      <div className="signupContainer">
+        <img src="/img/img_logo_sp.png" width="100%" height="auto" />
+
         <TextField
-          hintText='名前を入力してください'
+          hintText='ハンドルネームを登録してください'
           name='userName'
           errorText={errorText}
           onChange={this.handleChange}
+          ref="userName"
+
+          style={{
+            margin: '48px 0 40px',
+            padding: '0 15px',
+            borderRadius: '6px',
+            width: '100%',
+            height: 40,
+            lineHeight: '40px',
+            border: '3px solid #fff'
+          }}
+
+          underlineStyle={{
+            display: 'none'
+          }}
+
+          inputStyle={{
+            position: 'absolute',
+            color: '#fff',
+            lineHeight: '34px',
+            fontSize: '12px',
+            bottom: 'inherit'
+          }}
+
+          hintStyle={{
+            color: '#fff',
+            lineHeight: '34px',
+            fontSize: '12px',
+            bottom: 'inherit'
+          }}
+
+          errorStyle={{
+            position: 'absolute',
+            bottom: '-24px'
+          }}
         />
-        <RaisedButton label='送信する' onTouchTap={this.handleSubmit} />
+
+        <Button label='OK' disabled={!isNormalUserName} onTouchTap={this.handleSubmit} />
         <FullWindowCircleProgress isProgressShow={isProgressShow} />
       </div>
     )

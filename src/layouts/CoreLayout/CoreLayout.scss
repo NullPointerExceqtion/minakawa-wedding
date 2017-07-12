@@ -1,16 +1,68 @@
+// ================================
+// media query mixin
+// ================================
+$breakpoint-sm: 400px !default;
+$breakpoint-md: 768px !default;
+$breakpoint-lg: 1000px !default;
+
+$breakpoints: (
+  'sm': 'screen and (max-width: 400px)',
+  'md': 'screen and (max-width: 768px)',
+  'lg': 'screen and (max-width: 1000px)',
+  'xl': 'screen and (max-width: 1200px)',
+) !default;
+
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+// ================================
+// Layout
+// ================================
 body {
     font-family: 'arial', 'Mplus 1p';
 }
 .core-layout__viewport {
+    position: relative;
     width: 100vw;
     height: 100vh;
-    background: url(/img/img_bg_pc.png) center / cover;
+    background-image: url(/img/img_bg_pc.png);
+    background-position: center;
+    background-size: cover;
     overflow: hidden;
+
+    @include mq(md) {
+        background-image: url(/img/img_bg_sp.png);
+    }
 }
 
 // ================================
 // Common
 // ================================
+
+// 共通のRaisedButton
+.buttonContainer {
+    @include mq(md) {
+        width: 100%;
+        text-align: center;
+
+        // material-ui style指定がmediaQueryに
+        // 対応していないみたいなのでCSS側で無理やり上書きする
+        &__btn {
+            width: 90.625% !important;
+        }
+        button {
+            height: 44px !important;
+            line-height: 44px !important;
+        }
+        button > * {
+            height: 44px !important;
+        }
+    }
+
+}
 
 // 左上のQuestion Number
 .questionNumber {
@@ -22,6 +74,12 @@ body {
     font-size: 94px;
     transform: rotate(-16deg);
     font-weight: 900;
+
+    @include mq(md) {
+        top: 5px;
+        left: 15px;
+        font-size: 56px;
+    }
 }
 
 // 問題テキスト

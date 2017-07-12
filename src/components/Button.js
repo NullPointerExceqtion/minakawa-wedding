@@ -9,25 +9,35 @@ class Button extends React.Component {
   }
 
   render () {
-    const { label, onTouchTap } = this.props
+    const { label, onTouchTap, disabled } = this.props
 
     return (
       <div className="buttonContainer">
         <RaisedButton
+          className="buttonContainer__btn"
           label={ label }
+          disabledBackgroundColor='#fff'
+          disabledLabelColor="#000"
+
           style={{
             borderRadius: 100,
-            width: 232
+            width: 232,
+            opacity: disabled ? 0.3 : 1
           }}
+          
           buttonStyle={{
-            borderRadius: 100
+            borderRadius: 100,
           }}
+          
           labelStyle={{
             padding: '12px 0 10px',
             fontWeight: 'bold',
             fontSize: 20
           }}
+          
           onTouchTap={ onTouchTap }
+
+          disabled={disabled}
         />
       </div>
     )
