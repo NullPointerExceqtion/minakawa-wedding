@@ -21,20 +21,25 @@ $breakpoints: (
 // ================================
 // Layout
 // ================================
+html {
+    height: 100%;
+}
 body {
+    position: relative;
+    height: 100%;
     font-family: 'arial', 'Mplus 1p';
 }
 .core-layout__viewport {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background-image: url(/img/img_bg_pc.png);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://lh3.google.com/u/0/d/0B88NKwTqWU_DTkNTZnNFaDNZaVk=w2340-h1606-iv1);
     background-position: center;
     background-size: cover;
     overflow: hidden;
 
     @include mq(md) {
-        background-image: url(/img/img_bg_sp.png);
+        background-image: url(https://lh3.google.com/u/0/d/0B88NKwTqWU_DWTFlLXJMSmtKdlk=w2340-h1606-iv1);
     }
 }
 
@@ -44,6 +49,8 @@ body {
 
 // 共通のRaisedButton
 .buttonContainer {
+    text-align: center;
+
     @include mq(md) {
         width: 100%;
         text-align: center;

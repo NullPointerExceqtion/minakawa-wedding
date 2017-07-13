@@ -22,7 +22,7 @@ class HostView extends React.Component {
 
     return (
       <div className="hostContainer">
-        <img className="hostContainer__logo" src="/img/img_logo_pc.png" width="761" height="351" />
+        <img className="hostContainer__logo" src="https://lh3.google.com/u/0/d/0B88NKwTqWU_DVlFZQXJCVmpzWTg=w2340-h1606-iv1" width="761" height="351" />
 
         <Button label='START' onTouchTap={ nextQuizPublished }></Button>
       </div>
