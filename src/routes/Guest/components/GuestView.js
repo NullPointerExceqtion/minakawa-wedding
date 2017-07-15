@@ -21,6 +21,35 @@ const resultElementImage = {
   incorrect: 'https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_incorrect.png'
 }
 
+/**
+ * Element
+ */
+// ①~④のボタンElement
+const uncheckedIcon = (number) => (
+  <div className="answerBox__icon answerBox__icon--unchecked">{number}</div>
+)
+
+// ①~④のcheckパターン
+const checkedIcon = () => (
+  <div className="answerBox__icon answerBox__icon--checked">
+    <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_check.png" width="30" height="auto" />
+  </div>
+)
+
+// 正解結果画面
+const resultElement = (type) => (
+  <div className="resultContainer">
+    <img src={resultElementImage[type]} width="180" height="180"/>
+    <h1 className="resultContainer__ttl">{resultElementTitle[type]}</h1>
+    <p className="resultContainer__tx">{resultElementText[type]}</p>
+
+    <div className="logo-sm logo-sm--lowerRight">
+      <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="97" height="auto"/>
+    </div>
+
+  </div>
+)
+
 class GuestView extends React.Component {
   static propTypes = {
     answerSubmitted     : PropTypes.func,
@@ -31,6 +60,7 @@ class GuestView extends React.Component {
   }
 
   state = {
+    isGetQuizItem  : false,
     selectedRadio  : false,
     selectedNumber : false
   }
@@ -39,11 +69,16 @@ class GuestView extends React.Component {
     const { showQuizItem, showIsCorrectDialog } = this.props
     window.socket.emit('joinRoom', 'guest')
 
+    // 問題をサーバーから受け取る
     window.socket.on('quizPublished', (quizItem) => {
       this.resetState()
+      this.setState({
+        isGetQuizItem: true
+      })
       showQuizItem(quizItem)
     })
 
+    // 問題停止をサーバーから受け取る
     window.socket.on('answerStop', () => {
       showIsCorrectDialog({
         isAnswerStop: true
@@ -60,59 +95,28 @@ class GuestView extends React.Component {
     })
   }
 
-  answerSubmitted(_id, userId) {
+  answerSubmitted (_id, userId) {
     const { answerSubmitted } = this.props
     const selectedNumber = this.state.selectedNumber
 
     answerSubmitted(selectedNumber, _id, userId)
   }
 
-  resetState() {
+  resetState () {
     this.setState({
       selectedRadio  : false,
       selectedNumber : false
     })
   }
 
-  render () {
+  radioButtonsElement () {
     const { quizItem, userInfo } = this.props
     const { selectedRadio, selectedNumber } = this.state
+
     const radioGroupClassName = selectedRadio === false ? 'answerBox' : 'answerBox answerBox--selected'
 
-    let renderElement = ''
-
-    const uncheckedIcon = (number) => (
-      <div className="answerBox__icon answerBox__icon--unchecked">{number}</div>
-    )
-    const checkedIcon = () => (
-      <div className="answerBox__icon answerBox__icon--checked">
-        <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_check.png" width="30" height="auto" />
-      </div>
-    )
-
-    const resultElement = (type) => (
-      <div className="resultContainer">
-        <img src={resultElementImage[type]} width="180" height="180"/>
-        <h1 className="resultContainer__ttl">{resultElementTitle[type]}</h1>
-        <p className="resultContainer__tx">{resultElementText[type]}</p>
-
-        <div className="logo-sm logo-sm--lowerRight">
-          <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="97" height="auto"/>
-        </div>
-
-      </div>
-    )
-
-    if (quizItem.isAnswerStop) {
-      if (quizItem.isCorrect) {
-        renderElement = resultElement('correct')
-      } else {
-        renderElement = resultElement('incorrect')
-      }
-    } else if (quizItem.isSubmitted) {
-      renderElement = resultElement('answer')
-    } else if (quizItem.title) {
-      let radioButtonItems = [1, 2, 3, 4].map((val, index) =>
+    let radioButtonItems = [1, 2, 3, 4].map((val, index) => {
+      return (
         <RadioButton
           className={selectedNumber === val ? 'answerBox__item is-selected' : 'answeraBox__item' }
           label={quizItem[`answer${val}`]}
@@ -137,29 +141,51 @@ class GuestView extends React.Component {
 
         />
       )
+    })
 
-      renderElement = (
-        <div>
-          <RadioButtonGroup
-            name='guestAnswer'
-            className={ radioGroupClassName }
-            onChange={(e, val) => this.onChange(e, val) }
-            ref='radioButtonGroup'
-          >
-            { radioButtonItems }
-          </RadioButtonGroup>
+    return (
+      <div>
+        <RadioButtonGroup
+          name='guestAnswer'
+          className={ radioGroupClassName }
+          onChange={(e, val) => this.onChange(e, val) }
+          ref='radioButtonGroup'
+        >
+          { radioButtonItems }
+        </RadioButtonGroup>
 
-          <div className='answerButtonContainer'>
-            <p className='answerButtonContainer__tx'>正解を選んでタップしてね!</p>
-            <Button label='OK' onTouchTap={() => this.answerSubmitted(quizItem._id, userInfo.userId)} disabled={!selectedRadio}></Button>
-          </div>
+        <div className='answerButtonContainer'>
+          <p className='answerButtonContainer__tx'>正解を選んでタップしてね!</p>
+          <Button label='OK' onTouchTap={() => this.answerSubmitted(quizItem._id, userInfo.userId)} disabled={!selectedRadio}></Button>
         </div>
-      )
+      </div>
+    )
+  }
+
+  render () {
+    const { quizItem, userInfo } = this.props
+
+    const questionNumber = quizItem.no ? `Q${quizItem.no}` : ''
+
+    let renderElement = ''
+
+    if(!quizItem.isAnswerStop && quizItem.isGetQuizItem) {
+      renderElement = this.radioButtonsElement()
+    }
+
+    if (quizItem.isAnswerStop) {
+      if (quizItem.isCorrect) {
+        renderElement = resultElement('correct')
+      } else {
+        renderElement = resultElement('incorrect')
+      }
+    } else if (quizItem.isSubmitted) {
+      renderElement = resultElement('answer')
     }
 
     return (
       <div className="guestContainer">
-        <div className="questionNumber">Q1</div>
+        <div className="questionNumber">{questionNumber}</div>
         {renderElement}
       </div>
     )

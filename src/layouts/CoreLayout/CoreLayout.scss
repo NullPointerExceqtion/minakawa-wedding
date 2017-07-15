@@ -22,25 +22,25 @@ $breakpoints: (
 // Layout
 // ================================
 html {
-    height: 100%;
+  height: 100%;
 }
 body {
-    position: relative;
-    height: 100%;
-    font-family: 'arial', 'Mplus 1p';
+  position: relative;
+  height: 100%;
+  font-family: 'arial', 'Mplus 1p';
 }
 .core-layout__viewport {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_pc.png);
-    background-position: center;
-    background-size: cover;
-    overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_pc.png);
+  background-position: center;
+  background-size: cover;
+  // overflow: hidden;
 
-    @include mq(md) {
-        background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_sp.png);
-    }
+  @include mq(md) {
+    background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_sp.png);
+  }
 }
 
 // ================================
@@ -49,63 +49,120 @@ body {
 
 // 共通のRaisedButton
 .buttonContainer {
+  text-align: center;
+
+  @include mq(md) {
+    width: 100%;
     text-align: center;
 
-    @include mq(md) {
-        width: 100%;
-        text-align: center;
-
-        // material-ui style指定がmediaQueryに
-        // 対応していないみたいなのでCSS側で無理やり上書きする
-        &__btn {
-            width: 90.625% !important;
-        }
-        button {
-            height: 44px !important;
-            line-height: 44px !important;
-        }
-        button > * {
-            height: 44px !important;
-        }
+    // material-ui style指定がmediaQueryに
+    // 対応していないみたいなのでCSS側で無理やり上書きする
+    &__btn {
+      width: 90.625% !important;
     }
+    button {
+      height: 44px !important;
+      line-height: 44px !important;
+    }
+    button > * {
+      height: 44px !important;
+    }
+  }
 
 }
 
 // 左上のQuestion Number
 .questionNumber {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    color: #FFFFFF;
-    letter-spacing: -2.7px;
-    font-size: 94px;
-    transform: rotate(-16deg);
-    font-weight: 900;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  color: #FFFFFF;
+  letter-spacing: -2.7px;
+  font-size: 94px;
+  transform: rotate(-16deg);
+  font-weight: 900;
 
-    @include mq(md) {
-        top: 5px;
-        left: 15px;
-        font-size: 56px;
-    }
+  @include mq(md) {
+    top: 5px;
+    left: 15px;
+    font-size: 56px;
+  }
 }
 
 // 問題テキスト
-.textBox {
-    position: absolute;
-    margin: auto;
-    top: 132px;
-    left: 0;
-    right: 0;
-    width: 864px;
-}
-.textBox--large .textBox__tx {
-    font-size: 120px;
-    line-height: 136px;
-    text-align: center;
-}
-.textBox__tx {
+.questionBox {
+  position: absolute;
+  margin: auto;
+  top: 132px;
+  left: 0;
+  right: 0;
+  width: 864px;
+
+  &__tx {
     color: #fff;
     font-size: 48px;
     line-height: 60px;
     font-weight: bold;
+  }
+
+  &--large {
+    .questionBox__tx {
+      font-size: 120px;
+      line-height: 136px;
+      text-align: center;
+    }
+
+    .imageBox {
+      &__item {
+        width: 100%;
+        height: 416px;
+      }
+
+      &__wrapImage {
+        margin: 0 auto;
+        width: 720px;
+      }
+
+      & + .questionBox__tx {
+        font-size: 80px;
+        line-height: 1;
+      }
+    }
+  }
+}
+
+// 問題画像
+.imageBox {
+  padding: 0;
+  width: 100%;
+  list-style-type: none;
+  text-align: center;
+
+  &__wrapImage {
+    width: inherit;
+    height: inherit;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__item {
+    display: inline-block;
+    margin-bottom: 24px;
+    width: 416px;
+    height: 240px;
+    background: #D8D8D8;
+    vertical-align: top;
+
+    &:nth-child(odd) {
+      margin-right: 24px;
+    }
+
+    &:last-child {
+      background: transparent;
+    }
+  }
 }

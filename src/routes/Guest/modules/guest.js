@@ -83,24 +83,32 @@ export const actions = {
 const ACTION_HANDLERS = {
   [SHOW_QUIZ_ITEM]: (state, action) => {
     let {
-      title,
       answer1,
       answer2,
       answer3,
       answer4,
+      image_path1,
+      image_path2,
+      image_path3,
+      no,
+      type,
       _id
     } = action.payload
 
     return Object.assign({}, state, {
-      title,
       answer1,
       answer2,
       answer3,
       answer4,
+      image_path1,
+      image_path2,
+      image_path3,
+      no,
+      type,
       _id,
-      isSubmitted: false,
-      isCorrect: null,
-      isAnswerStop: false
+      isSubmitted   : false,
+      isAnswerStop  : false,
+      isGetQuizItem : true
     })
   },
 
@@ -127,15 +135,20 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  title: '',
-  answer1: '',
-  answer2: '',
-  answer3: '',
-  answer4: '',
-  _id: false,
-  isSubmitted: false,
-  isCorrect: null,
-  isAnswerStop: false
+  answer1       : '',
+  answer2       : '',
+  answer3       : '',
+  answer4       : '',
+  image_path1   : '',
+  image_path2   : '',
+  image_path3   : '',
+  no            : null,
+  type          : '',
+  _id           : false,
+  isSubmitted   : false,
+  isCorrect     : null,
+  isAnswerStop  : false,
+  isGetQuizItem : false
 }
 
 export default function guestReducer (state = initialState, action) {
