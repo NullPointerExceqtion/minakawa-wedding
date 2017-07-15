@@ -164,7 +164,6 @@ class GuestView extends React.Component {
 
   render () {
     const { quizItem, userInfo } = this.props
-    const { selectedRadio, selectedNumber } = this.state
 
     const questionNumber = quizItem.no ? `Q${quizItem.no}` : ''
 

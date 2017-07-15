@@ -11,8 +11,38 @@ class ResultView extends React.Component {
     nextQuizPublished : PropTypes.func
   }
 
+  typeSentenceElement (description) {
+    return (
+      <div className="questionBox questionBox--large">
+        <p className="questionBox__tx">{ description }</p>
+      </div>
+    )
+  }
+
+  typeImageElement (description, imagePath) {
+    return (
+      <div className="questionBox questionBox--large">
+
+        <div className="imageBox">
+          <div className="imageBox__item">
+            <div className="imageBox__wrapImage">
+              <img src={ imagePath } />
+            </div>
+          </div>
+        </div>
+
+        <p className="questionBox__tx">{ description }</p>
+      </div>
+    )
+  }
+
   render () {
     const { selectQuizItem, nextQuizId, nextQuizPublished } = this.props
+    if(selectQuizItem) {
+      console.log(selectQuizItem)
+      console.log(selectQuizItem.type === 'image')
+      console.log(this.typeImageElement)
+    }
 
     return (
       <div className="resultContainer">
@@ -20,11 +50,18 @@ class ResultView extends React.Component {
           nextQuizId
           ? selectQuizItem ? (
             <div>
-              <div className="questionNumber">Q1</div>
+              <div className="questionNumber">Q{ selectQuizItem.no }</div>
 
-              <div className="textBox textBox--large">
-                <p className="textBox__tx">{ selectQuizItem.description }</p>
-              </div>
+              {
+                selectQuizItem.type === 'sentence' ? this.typeSentenceElement(selectQuizItem.description) : ''
+              }
+
+              {
+                selectQuizItem.type === 'image' ? this.typeImageElement(
+                  selectQuizItem.description,
+                  selectQuizItem[`image_path${selectQuizItem.correct_answer}`]
+                ) : ''
+              }
 
               <div className="nextButton">
                 <ButtonFlat
@@ -34,8 +71,8 @@ class ResultView extends React.Component {
               </div>
             </div>
           ) : '' : (
-            <div className="textBox textBox--large">
-              <p className="textBox__tx">終わり!</p>
+            <div className="questionBox questionBox--large">
+              <p className="questionBox__tx">終わり!</p>
             </div>
           )
         }

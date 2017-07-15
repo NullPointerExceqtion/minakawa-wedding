@@ -59,19 +59,7 @@ io.on('connection', function (socket) {
       let quizlist = []
       for (let i = 0, size = docs.length; i < size; ++i) {
         if (docs[i]) {
-          quizlist.push({
-            _id: docs[i]._id,
-            body: docs[i].body,
-            type: docs[i].type,
-            image_path1: docs[i].image_path1,
-            image_path2: docs[i].image_path2,
-            image_path3: docs[i].image_path3,
-            answer1: docs[i].answer1,
-            answer2: docs[i].answer2,
-            answer3: docs[i].answer3,
-            answer4: docs[i].answer4,
-            description: docs[i].description,
-          })
+          quizlist.push(docs[i])
         }
       }
       fn(quizlist)

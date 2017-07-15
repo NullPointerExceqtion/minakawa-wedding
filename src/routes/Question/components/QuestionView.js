@@ -10,7 +10,7 @@ import './QuestionView.scss'
 class QuestionView extends React.Component {
   static propTypes = {
     answerStop     : PropTypes.func,
-    selectQuizItem : PropTypes.object.isRequired,
+    selectQuizItem : PropTypes.object,
   }
 
   state = {
@@ -46,6 +46,43 @@ class QuestionView extends React.Component {
     )
   }
 
+  typeSentenceElement (body) {
+    return (
+      <div className="questionBox">
+        <p className="questionBox__tx">{body}</p>
+      </div>
+    )
+  }
+
+  typeImageElement (imagePath1, imagePath2, imagePath3, body) {
+    return (
+      <div className="questionBox">
+        <ul className="imageBox">
+          <li className="imageBox__item">
+            <div className="imageBox__wrapImage">
+              <img src={imagePath1} />
+            </div>
+          </li>
+          <li className="imageBox__item">
+            <div className="imageBox__wrapImage">
+              <img src={imagePath2} />
+            </div>
+          </li>
+          <li className="imageBox__item">
+            <div className="imageBox__wrapImage">
+              <img src={imagePath3} />
+            </div>
+          </li>
+          <li className="imageBox__item questionBox__tx">
+            <p>{body}</p>
+          </li>
+        </ul>
+      </div>
+    )
+  }
+
+
+
   render () {
     const { selectQuizItem } = this.props
     const { progressTimeOfCowntDown } = this.state
@@ -54,11 +91,20 @@ class QuestionView extends React.Component {
       <div className="questionContainer">
         {selectQuizItem ? (
           <div>
-            <div className="questionNumber">Q1</div>
+            <div className="questionNumber">Q{selectQuizItem.no}</div>
 
-            <div className="textBox">
-              <p className="textBox__tx">{selectQuizItem.body}</p>
-            </div>
+            {
+              selectQuizItem.type === 'sentence' ? this.typeSentenceElement(selectQuizItem.body) : ''
+            }
+
+            {
+              selectQuizItem.type === 'image' ? this.typeImageElement(
+                selectQuizItem.image_path1,
+                selectQuizItem.image_path2,
+                selectQuizItem.image_path3,
+                selectQuizItem.body
+              ) : ''
+            }
 
             <div className="progressTimeOfCowntDown">
               <span className="progressTimeOfCowntDown__subTx">残り</span>
