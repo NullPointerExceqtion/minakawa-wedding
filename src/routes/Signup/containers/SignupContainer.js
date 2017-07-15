@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { userRegist } from '../modules/signup'
+import { resetStoreExceptSignup } from '../../../modules/app'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -16,6 +17,9 @@ const mapDispatchToProps = (dispatch, getState) => {
   return {
     userRegist: (payload) => {
       return dispatch(userRegist(payload))
+    },
+    resetStoreExceptSignup: (payload) => {
+      return dispatch(resetStoreExceptSignup())
     }
   }
 }

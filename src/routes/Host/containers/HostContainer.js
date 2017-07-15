@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { quizListGiven, nextQuizPublished, answerStop } from '../../../modules/app'
+import { quizListGiven, nextQuizPublished, answerStop, resetStoreExceptSignup } from '../../../modules/app'
 import { browserHistory } from 'react-router'
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -15,6 +15,9 @@ import HostView from '../components/HostView'
 
 const mapDispatchToProps = (dispatch, state) => {
   return {
+    resetStoreExceptSignup: () => {
+      return dispatch(resetStoreExceptSignup())
+    },
     quizListGiven: () => {
       return dispatch(quizListGiven())
     },

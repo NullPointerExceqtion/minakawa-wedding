@@ -6,7 +6,6 @@ import TextField from 'material-ui/TextField'
 import FullWindowCircleProgress from '../../../components/FullWindowCircleProgress/fullWindowCircleProgress.js'
 import { browserHistory } from 'react-router'
 
-
 import './SignupView.scss'
 
 class SignupView extends React.Component {
@@ -49,14 +48,16 @@ class SignupView extends React.Component {
 
   handleSubmit (e) {
     const userName = this.refs.userName.input.value
-    const { userRegist } = this.props
+    const { userRegist, resetStoreExceptSignup } = this.props
 
     if (userName.length === 0) {
       this.handleChange(userNameRef)
       return
     }
 
-    const userRegistPromise = userRegist(this.state)
+    const userRegistPromise = resetStoreExceptSignup().then(() => {
+      return userRegist(this.state)
+    });
 
     this.setState({
       isProgressShow: true

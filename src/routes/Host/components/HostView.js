@@ -13,8 +13,11 @@ class HostView extends React.Component {
   componentDidMount () {
     socket.emit('joinRoom', 'host')
 
-    const { quizListGiven } = this.props
-    quizListGiven()
+    const { quizListGiven, resetStoreExceptSignup } = this.props
+
+    resetStoreExceptSignup().then(() => {
+      quizListGiven()
+    })
   }
 
   render () {
