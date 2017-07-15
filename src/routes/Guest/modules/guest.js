@@ -98,9 +98,9 @@ const ACTION_HANDLERS = {
       answer3,
       answer4,
       _id,
-      isSubmitted: false,
-      isCorrect: null,
-      isAnswerStop: false
+      isSubmitted   : false,
+      isAnswerStop  : false,
+      isGetQuizItem : true
     })
   },
 
@@ -127,15 +127,16 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  title: '',
-  answer1: '',
-  answer2: '',
-  answer3: '',
-  answer4: '',
-  _id: false,
-  isSubmitted: false,
-  isCorrect: null,
-  isAnswerStop: false
+  title         : '',
+  answer1       : '',
+  answer2       : '',
+  answer3       : '',
+  answer4       : '',
+  _id           : false,
+  isSubmitted   : false,
+  isCorrect     : null,
+  isAnswerStop  : false,
+  isGetQuizItem : false
 }
 
 export default function guestReducer (state = initialState, action) {
