@@ -24,8 +24,8 @@
     overflow: hidden;
   }
 
-  &--selected input:not(:checked) + div {
-    opacity: .3 !important;
+  &__item.is-selected {
+    opacity: .3;
   }
 
   &__icon {
@@ -68,7 +68,7 @@
 
 .resultContainer {
   display: flex;
-  height: 90%;
+  height: 100%;
   align-items: center;
   justify-content: center;
   flex-direction: column;

@@ -78,7 +78,7 @@ class SignupView extends React.Component {
 
     return (
       <div className="signupContainer">
-        <img src="/img/img_logo_sp.png" width="100%" height="auto" />
+        <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="100%" height="auto" />
 
         <TextField
           hintText='ハンドルネームを登録してください'
