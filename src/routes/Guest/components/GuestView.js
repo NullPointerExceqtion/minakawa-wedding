@@ -16,9 +16,9 @@ const resultElementText = {
   incorrect: 'どんまい！がんばろう！'
 }
 const resultElementImage = {
-  answer: 'https://lh3.google.com/u/0/d/0B88NKwTqWU_DZ1JrN0ZqY2NuZHM=w2880-h1606-iv1',
-  correct: 'https://lh3.google.com/u/0/d/0B88NKwTqWU_DTlE3S2lwa21Nb3c=w2880-h1606-iv1',
-  incorrect: 'https://lh3.google.com/u/0/d/0B88NKwTqWU_DTUNJMTItMTVHcHc=w2340-h1606-iv1'
+  answer: 'https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_answer.png',
+  correct: 'https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_correct.png',
+  incorrect: 'https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_incorrect.png'
 }
 
 class GuestView extends React.Component {
@@ -69,7 +69,8 @@ class GuestView extends React.Component {
 
   resetState() {
     this.setState({
-      selectedRadio: false
+      selectedRadio  : false,
+      selectedNumber : false
     })
   }
 
@@ -85,7 +86,7 @@ class GuestView extends React.Component {
     )
     const checkedIcon = () => (
       <div className="answerBox__icon answerBox__icon--checked">
-        <img src="https://lh3.google.com/u/0/d/0B88NKwTqWU_DTzZ2R2w3d29uWFE=w2340-h1606-iv1" width="30" height="auto" />
+        <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_check.png" width="30" height="auto" />
       </div>
     )
 
@@ -96,7 +97,7 @@ class GuestView extends React.Component {
         <p className="resultContainer__tx">{resultElementText[type]}</p>
 
         <div className="logo-sm logo-sm--lowerRight">
-          <img src="https://lh3.google.com/u/0/d/0B88NKwTqWU_DS3FqQUZzNm54OU0=w1740-h1606-iv1" width="97" height="auto"/>
+          <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="97" height="auto"/>
         </div>
 
       </div>
