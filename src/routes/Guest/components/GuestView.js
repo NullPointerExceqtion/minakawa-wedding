@@ -95,14 +95,14 @@ class GuestView extends React.Component {
     })
   }
 
-  answerSubmitted(_id, userId) {
+  answerSubmitted (_id, userId) {
     const { answerSubmitted } = this.props
     const selectedNumber = this.state.selectedNumber
 
     answerSubmitted(selectedNumber, _id, userId)
   }
 
-  resetState() {
+  resetState () {
     this.setState({
       selectedRadio  : false,
       selectedNumber : false
@@ -166,6 +166,8 @@ class GuestView extends React.Component {
     const { quizItem, userInfo } = this.props
     const { selectedRadio, selectedNumber } = this.state
 
+    const questionNumber = quizItem.no ? `Q${quizItem.no}` : ''
+
     let renderElement = ''
 
     if(!quizItem.isAnswerStop && quizItem.isGetQuizItem) {
@@ -184,7 +186,7 @@ class GuestView extends React.Component {
 
     return (
       <div className="guestContainer">
-        <div className="questionNumber">Q1</div>
+        <div className="questionNumber">{questionNumber}</div>
         {renderElement}
       </div>
     )
