@@ -10,7 +10,7 @@ import resultReducer from '../routes/Result/modules/result'
 import signupReducer from '../routes/Signup/modules/signup'
 
 export const makeRootReducer = (asyncReducers) => {
-  return combineReducers({
+  const rootReducer = combineReducers({
     location : locationReducer,
     app      : appReducer,
     guest    : guestReducer,
@@ -21,6 +21,14 @@ export const makeRootReducer = (asyncReducers) => {
     signup   : signupReducer,
     ...asyncReducers
   })
+
+  return (state, action) => {
+    if (action.type === 'RESET_STORE_EXCEPT_SIGNUP') {
+      const signup = Object.assign({}, {signup: state.signup})
+      state = signup
+    }
+    return rootReducer(state, action)
+  }
 }
 
 export const injectReducer = (store, { key, reducer }) => {

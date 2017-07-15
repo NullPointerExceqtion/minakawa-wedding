@@ -9,6 +9,9 @@ export const ANSWER_STOP = 'ANSWER_STOP'
 export const SET_SELECTED_QUIZID = 'SET_SELECTED_QUIZID'
 export const SET_NEXT_QUIZID = 'SET_NEXT_QUIZID'
 
+// Action自体はreducers.jsに記入
+export const RESET_STORE_EXCEPT_SIGNUP = 'RESET_STORE_EXCEPT_SIGNUP'
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -101,6 +104,19 @@ export const answerStop = (payload) => {
     })
   }
 }
+
+export const resetStoreExceptSignup = () => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      dispatch({
+        type   : RESET_STORE_EXCEPT_SIGNUP
+      })
+
+      resolve()
+    })
+  }
+}
+
 
 export const setSelectedQuizId = (payload) => {
   return {
