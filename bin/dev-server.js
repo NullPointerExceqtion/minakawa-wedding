@@ -61,6 +61,7 @@ io.on('connection', function (socket) {
         if (docs[i]) {
           quizlist.push({
             _id: docs[i]._id,
+            no: docs[i].no,
             body: docs[i].body,
             type: docs[i].type,
             image_path1: docs[i].image_path1,
