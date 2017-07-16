@@ -7,10 +7,15 @@ export const USER_REGIST_ID = 'USER_REGIST_ID'
 // ------------------------------------
 // Actions
 // ------------------------------------
+/**
+ * userRegist
+ * @export
+ * @param {String} payload ユーザー名
+ */
 export function userRegist (payload) {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      window.socket.emit('userRegist', payload.userName, (userId) => {
+      window.socket.emit('userRegist', payload, (userId) => {
         dispatch({
           type    : USER_REGIST_ID,
           payload : {
@@ -23,7 +28,9 @@ export function userRegist (payload) {
 
       dispatch({
         type    : USER_REGIST,
-        payload
+        payload : {
+          userName : payload
+        }
       })
     })
   }
@@ -34,6 +41,7 @@ export function userRegist (payload) {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [USER_REGIST]: (state, action) => {
+    console.log(action)
     return Object.assign({}, state, {
       userName: action.payload.userName
     })

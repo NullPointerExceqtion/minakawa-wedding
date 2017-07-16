@@ -10,17 +10,18 @@ import './SignupView.scss'
 
 class SignupView extends React.Component {
   static propTypes = {
-    userRegist : PropTypes.func
+    userRegist             : PropTypes.func,
+    resetStoreExceptSignup : PropTypes.func
+  }
+
+  state = {
+      errorText        : '',
+      isProgressShow   : false,
+      isNormalUserName : false
   }
 
   constructor (props) {
     super(props)
-
-    this.state = {
-      errorText: '',
-      isProgressShow: false,
-      isNormalUserName: false
-    }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -56,7 +57,7 @@ class SignupView extends React.Component {
     }
 
     const userRegistPromise = resetStoreExceptSignup().then(() => {
-      return userRegist(this.state)
+      return userRegist(userName)
     });
 
     this.setState({
@@ -123,8 +124,8 @@ class SignupView extends React.Component {
           }}
         />
 
-        <Button label='OK' disabled={!isNormalUserName} onTouchTap={this.handleSubmit} />
-        <FullWindowCircleProgress isProgressShow={isProgressShow} />
+        <Button label='OK' disabled={ !isNormalUserName } onTouchTap={ this.handleSubmit } />
+        <FullWindowCircleProgress isProgressShow={ isProgressShow } />
       </div>
     )
   }
