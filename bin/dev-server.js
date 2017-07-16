@@ -144,6 +144,7 @@ io.on('connection', function (socket) {
           })
         }
       }
+      fn(resultlist)
     })
   })
 })
