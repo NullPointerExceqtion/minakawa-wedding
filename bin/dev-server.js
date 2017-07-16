@@ -133,7 +133,7 @@ io.on('connection', function (socket) {
     debugSocket('resultAnnouncement')
 
     // 各ユーザーの正解数
-    Users.find({}, function(err, docs) {
+    Users.find({}, {sort:{correct_answer_count: -1}}, function(err, docs) {
       let resultlist = []
       for (let i = 0, size = docs.length; i < size; ++i) {
         if (docs[i]) {
@@ -144,6 +144,7 @@ io.on('connection', function (socket) {
           })
         }
       }
+      console.log(resultlist)
       fn(resultlist)
     })
   })
