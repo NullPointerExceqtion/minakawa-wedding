@@ -10,7 +10,7 @@ import './QuestionView.scss'
 class QuestionView extends React.Component {
   static propTypes = {
     answerStop     : PropTypes.func,
-    selectQuizItem : PropTypes.object,
+    selectQuizItem : PropTypes.object
   }
 
   state = {

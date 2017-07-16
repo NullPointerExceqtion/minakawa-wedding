@@ -1,5 +1,10 @@
 import { connect } from 'react-redux'
-import { quizListGiven, nextQuizPublished, answerStop, resetStoreExceptSignup } from '../../../modules/app'
+import {
+  quizListGiven,
+  nextQuizPublished,
+  answerStop,
+  resetStoreExceptSignup
+} from '../../../modules/app'
 import { browserHistory } from 'react-router'
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -15,13 +20,13 @@ import HostView from '../components/HostView'
 
 const mapDispatchToProps = (dispatch, state) => {
   return {
-    resetStoreExceptSignup: () => {
+    resetStoreExceptSignup : () => {
       return dispatch(resetStoreExceptSignup())
     },
-    quizListGiven: () => {
+    quizListGiven          : () => {
       return dispatch(quizListGiven())
     },
-    nextQuizPublished: (_id) => {
+    nextQuizPublished      : (_id) => {
       return dispatch(nextQuizPublished()).then((nextQuizId) => {
         browserHistory.push(`/host/question/${nextQuizId}`)
       })
