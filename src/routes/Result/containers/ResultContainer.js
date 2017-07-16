@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import {
   selectQuizItemSelector,
-  nextQuizPublished
+  nextQuizPublished,
+  resultAnnouncement
 } from '../../../modules/app'
 import { browserHistory } from 'react-router'
 
@@ -18,19 +19,22 @@ import ResultView from '../components/ResultView'
 
 const mapDispatchToProps = (dispatch, getState) => {
   return {
-    nextQuizPublished: (_id) => {
+    nextQuizPublished  : (_id) => {
       return dispatch(nextQuizPublished()).then((nextQuizId) => {
         browserHistory.push(`/host/question/${nextQuizId}`)
       })
+    },
+    resultAnnouncement : () => {
+      return dispatch(resultAnnouncement())
     }
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    quizItems      : state.app.quizItems,
     selectQuizItem : selectQuizItemSelector(state),
-    nextQuizId     : state.app.nextQuizId
+    nextQuizId     : state.app.nextQuizId,
+    usersInfo      : state.app.usersInfo
   }
 }
 

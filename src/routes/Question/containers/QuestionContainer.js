@@ -21,10 +21,10 @@ import QuestionView from '../components/QuestionView'
 
 const mapDispatchToProps = (dispatch, getState) => {
   return {
-    quizListGiven     : () => {
+    quizListGiven      : () => {
       return dispatch(quizListGiven())
     },
-    answerStop        : (_id) => {
+    answerStop         : (_id) => {
       return dispatch(answerStop(_id))
     }
   }
