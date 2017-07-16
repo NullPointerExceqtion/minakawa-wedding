@@ -40,11 +40,16 @@ export default (initialState = {}) => {
     )
   )
 
-  window.persistor = persistStore(store, {
-    blacklist: 'location'
-  }, () => {
-    console.log('autoRehydrate completed')
-  });
+  window.persistorPromise = new Promise((resolve, reject) => {
+
+    window.persistor = persistStore(store, {
+      blacklist: 'location'
+    }, () => {
+      console.log('autoRehydrate completed')
+      resolve()
+    })
+
+  })
 
   store.asyncReducers = {}
 

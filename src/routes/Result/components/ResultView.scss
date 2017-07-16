@@ -4,8 +4,16 @@
     position: relative;
 }
 
-.nextButton {
+.nextButton,
+.usersResultButton {
     position: absolute;
+    z-index: 50;
+}
+.nextButton {
     right: 20px;
+    bottom: 10px;
+}
+.usersResultButton {
+    left: 20px;
     bottom: 10px;
 }

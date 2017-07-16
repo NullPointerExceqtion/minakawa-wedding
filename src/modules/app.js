@@ -8,6 +8,7 @@ export const QUIZ_PUBLISHED = 'QUIZ_PUBLISHED'
 export const ANSWER_STOP = 'ANSWER_STOP'
 export const SET_SELECTED_QUIZID = 'SET_SELECTED_QUIZID'
 export const SET_NEXT_QUIZID = 'SET_NEXT_QUIZID'
+export const RESULT_ANNOUNCEMENT = 'RESULT_ANNOUNCEMENT'
 
 // Action自体はreducers.jsに記入
 export const RESET_STORE_EXCEPT_SIGNUP = 'RESET_STORE_EXCEPT_SIGNUP'
@@ -25,6 +26,11 @@ export function registQuiz (payload) {
 /*  This is a thunk, meaning it is a function that immediately
     returns a function for lazy evaluation. It is incredibly useful for
     creating async actions, especially when combined with redux-thunk! */
+
+/**
+ * quizListGiven
+ * 全ての問題を取得する
+ */
 export const quizListGiven = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
@@ -40,6 +46,10 @@ export const quizListGiven = () => {
   }
 }
 
+/**
+ * quizPublished
+ * @param {Number} payload quizID
+ */
 export const quizPublished = (payload) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
@@ -64,6 +74,10 @@ export const quizPublished = (payload) => {
   }
 }
 
+/**
+ * nextQuizPublished
+ * 次の問題のQuizIDを判定しquizPublishedする
+ */
 export const nextQuizPublished = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
@@ -91,6 +105,11 @@ export const nextQuizPublished = () => {
   }
 }
 
+/**
+ * answerStop
+ * @param {Number} payload quizID
+ * 問題の出題を停止する
+ */
 export const answerStop = (payload) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
@@ -105,19 +124,47 @@ export const answerStop = (payload) => {
   }
 }
 
+/**
+ * resetStoreExceptSignup
+ * signup以外のstoreをresetする
+ */
 export const resetStoreExceptSignup = () => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      dispatch({
-        type   : RESET_STORE_EXCEPT_SIGNUP
-      })
+      window.persistorPromise.then(() => {
+        dispatch({
+          type   : RESET_STORE_EXCEPT_SIGNUP
+        })
 
-      resolve()
+        resolve()
+      })
     })
   }
 }
 
+/**
+ * resultAnnouncement
+ * 全ユーザーのユーザー名と正解数を取得する
+ */
+export const resultAnnouncement = () => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      window.socket.emit('resultAnnouncement', (payload) => {
+        dispatch({
+          type    : RESULT_ANNOUNCEMENT,
+          payload,
+        })
 
+        resolve()
+      })
+    })
+  }
+}
+
+/**
+ * setSelectedQuizId
+ * @param {Number} payload quizID
+ */
 export const setSelectedQuizId = (payload) => {
   return {
     type    : SET_SELECTED_QUIZID,
@@ -125,6 +172,10 @@ export const setSelectedQuizId = (payload) => {
   }
 }
 
+/**
+ * setNextQuizId
+ * @param {Number} payload quizID
+ */
 export const setNextQuizId = (payload) => {
   return {
     type    : SET_NEXT_QUIZID,
@@ -138,7 +189,8 @@ export const actions = {
   quizPublished,
   answerStop,
   setSelectedQuizId,
-  setNextQuizId
+  setNextQuizId,
+  resultAnnouncement
 }
 
 // ------------------------------------
@@ -185,6 +237,11 @@ const ACTION_HANDLERS = {
         nextQuizId: quizItems[selectedQuizItemsIndex + 1]._id
       })
     }
+  },
+  [RESULT_ANNOUNCEMENT] : (state, action) => {
+    return Object.assign({}, state, {
+      usersInfo : action.payload
+    })
   }
 }
 

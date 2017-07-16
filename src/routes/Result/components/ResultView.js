@@ -4,11 +4,19 @@ import ButtonFlat from '../../../components/ButtonFlat'
 
 import './ResultView.scss'
 
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 class ResultView extends React.Component {
   static propTypes = {
-    nextQuizId        : PropTypes.string.isRequired,
-    selectQuizItem    : PropTypes.object.isRequired,
-    nextQuizPublished : PropTypes.func
+    selectQuizItem     : PropTypes.object,
+    nextQuizId         : PropTypes.string,
+    nextQuizPublished  : PropTypes.func,
+    resultAnnouncement : PropTypes.func,
+    usersInfo          : PropTypes.array
+  }
+
+  state = {
+    isShowUsersResult : false
   }
 
   typeSentenceElement (description) {
@@ -36,46 +44,104 @@ class ResultView extends React.Component {
     )
   }
 
-  render () {
-    const { selectQuizItem, nextQuizId, nextQuizPublished } = this.props
-    if(selectQuizItem) {
-      console.log(selectQuizItem)
-      console.log(selectQuizItem.type === 'image')
-      console.log(this.typeImageElement)
+  typeUsersResultElement () {
+    const {
+      usersInfo
+    } = this.props
+
+    return (
+      <div className="questionBox questionBox--large">
+        {
+          usersInfo.map((val, index) => {
+            return (
+              <Card key={index}>
+                <CardHeader
+                  title={`${val.name} さん`}
+                  subtitle={val.correct_answer_count}
+                />
+              </Card>
+            )
+          })
+        }
+      </div>
+    )
+  }
+
+  onTouchTapUsersResult () {
+    const {
+      resultAnnouncement
+    } = this.props
+
+    resultAnnouncement().then(() => {
+      this.setState({
+        isShowUsersResult : true
+      })
+    })
+  }
+
+  detectRenderElement () {
+    const {
+      selectQuizItem,
+      nextQuizId,
+      nextQuizPublished,
+    } = this.props
+
+    const {
+      isShowUsersResult
+    } = this.state
+
+    const renderElement = () => {
+      // usersResultを表示
+      if(isShowUsersResult) {
+        return this.typeUsersResultElement()
+
+      } else if(selectQuizItem.type === 'sentence') {
+        // type : sentenceの結果
+        return this.typeSentenceElement(selectQuizItem.description)
+
+      } else if(selectQuizItem.type === 'image') {
+        // type : imageの結果
+        return this.typeImageElement(
+          selectQuizItem.description,
+          selectQuizItem[`image_path${selectQuizItem.correct_answer}`]
+        )
+      }
+    }
+
+    if(nextQuizId) {
+      return (
+        <div>
+          <div className="questionNumber">Q{ selectQuizItem.no }</div>
+
+          { renderElement() }
+
+          <div className="usersResultButton">
+            <ButtonFlat
+              label='RESULT'
+              onTouchTap={ () => this.onTouchTapUsersResult() }
+            />
+          </div>
+          <div className="nextButton">
+            <ButtonFlat
+              label='NEXT'
+              onTouchTap={ nextQuizPublished }
+            />
+          </div>
+        </div>
+      )
     }
 
     return (
+      <div className="questionBox questionBox--large">
+        <p className="questionBox__tx">終わり!</p>
+      </div>
+    )
+  }
+
+  render () {
+    return (
       <div className="resultContainer">
-        {
-          nextQuizId
-          ? selectQuizItem ? (
-            <div>
-              <div className="questionNumber">Q{ selectQuizItem.no }</div>
-
-              {
-                selectQuizItem.type === 'sentence' ? this.typeSentenceElement(selectQuizItem.description) : ''
-              }
-
-              {
-                selectQuizItem.type === 'image' ? this.typeImageElement(
-                  selectQuizItem.description,
-                  selectQuizItem[`image_path${selectQuizItem.correct_answer}`]
-                ) : ''
-              }
-
-              <div className="nextButton">
-                <ButtonFlat
-                  label='NEXT'
-                  onTouchTap={ nextQuizPublished }
-                />
-              </div>
-            </div>
-          ) : '' : (
-            <div className="questionBox questionBox--large">
-              <p className="questionBox__tx">終わり!</p>
-            </div>
-          )
-        }
+        { this.detectRenderElement() }
       </div>
     )
   }
