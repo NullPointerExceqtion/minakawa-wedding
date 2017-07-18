@@ -56,7 +56,7 @@ class GuestView extends React.Component {
     showQuizItem        : PropTypes.func,
     showIsCorrectDialog : PropTypes.func,
     quizItem            : PropTypes.object,
-    userInfo            : PropTypes.object.isRequired
+    userInfo            : PropTypes.object
   }
 
   state = {

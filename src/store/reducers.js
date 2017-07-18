@@ -24,7 +24,10 @@ export const makeRootReducer = (asyncReducers) => {
 
   return (state, action) => {
     if (action.type === 'RESET_STORE_EXCEPT_SIGNUP') {
-      const signup = Object.assign({}, {signup: state.signup})
+      const signup = Object.assign({}, {
+        signup   : state.signup,
+        location : state.location
+      })
       state = signup
     }
     return rootReducer(state, action)

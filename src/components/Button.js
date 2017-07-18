@@ -24,20 +24,21 @@ class Button extends React.Component {
             width: 232,
             opacity: disabled ? 0.3 : 1
           }}
-          
+
           buttonStyle={{
             borderRadius: 100,
+            overflow: 'hidden'
           }}
-          
+
           labelStyle={{
             padding: '12px 0 10px',
             fontWeight: 'bold',
             fontSize: 20
           }}
-          
+
           onTouchTap={ onTouchTap }
 
-          disabled={disabled}
+          disabled={ disabled }
         />
       </div>
     )

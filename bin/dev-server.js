@@ -26,6 +26,10 @@ if (project.env === 'development') {
 io.on('connection', function (socket) {
   debugSocket('connection')
 
+  socket.on('disconnect', function (socket) {
+    debugSocket('disconnect')
+  })
+
   var users = new Users()
   var questions = new Questions()
 
