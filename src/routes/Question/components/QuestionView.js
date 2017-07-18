@@ -33,7 +33,7 @@ class QuestionView extends React.Component {
   componentDidMount () {
     const { selectQuizItem } = this.props
 
-    cowntDownCreator(this.state.finishTime * 1000,
+    this.cowntDown = cowntDownCreator(this.state.finishTime * 1000,
       (progressTime) => {
         const time = this.formatProgressTime(progressTime)
         this.setState({
@@ -44,6 +44,12 @@ class QuestionView extends React.Component {
         this.emitAnswerStop(selectQuizItem._id)
       }
     )
+
+    this.cowntDown.create()
+  }
+
+  componentWillUnmount () {
+    this.cowntDown.cancel()
   }
 
   typeSentenceElement (body) {
@@ -80,8 +86,6 @@ class QuestionView extends React.Component {
       </div>
     )
   }
-
-
 
   render () {
     const { selectQuizItem } = this.props
