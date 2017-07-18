@@ -9,7 +9,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 class ResultView extends React.Component {
   static propTypes = {
     selectQuizItem     : PropTypes.object,
-    nextQuizId         : PropTypes.string,
+    nextQuizId         : PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     nextQuizPublished  : PropTypes.func,
     resultAnnouncement : PropTypes.func,
     usersInfo          : PropTypes.array
