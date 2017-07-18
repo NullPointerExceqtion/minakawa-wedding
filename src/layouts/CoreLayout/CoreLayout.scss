@@ -33,13 +33,13 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_pc.png);
+  background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_pc.jpg);
   background-position: center;
   background-size: cover;
   // overflow: hidden;
 
   @include mq(md) {
-    background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_sp.png);
+    background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_sp.jpg);
   }
 }
 
