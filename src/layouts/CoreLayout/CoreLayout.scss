@@ -166,3 +166,9 @@ body {
     }
   }
 }
+
+// override material-ui snackbar
+.snackbar button {
+  margin: 0 !important;
+  float: inherit !important;
+}
