@@ -9,14 +9,16 @@ export default (store) => ({
     // require.ensure([], (require) => {
       /*  Webpack - use require callback to define
           dependencies for bundling   */
-      const Result = require('./containers/ResultContainer').default
-      // const reducer = require('./modules/result').default
+      window.persistorPromise.then(() => {
+        const Result = require('./containers/ResultContainer').default
+        // const reducer = require('./modules/result').default
 
-      /*  Add the reducer to the store on key 'result'  */
-      // injectReducer(store, { key: 'result', reducer })
+        /*  Add the reducer to the store on key 'result'  */
+        // injectReducer(store, { key: 'result', reducer })
 
-      /*  Return getComponent   */
-      cb(null, Result)
+        /*  Return getComponent   */
+        cb(null, Result)
+      })
 
     /* Webpack named bundle   */
     // }, 'result')
