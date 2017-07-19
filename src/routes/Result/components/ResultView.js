@@ -132,8 +132,21 @@ class ResultView extends React.Component {
     }
 
     return (
-      <div className="questionBox questionBox--large">
-        <p className="questionBox__tx">終わり!</p>
+      <div>
+        {
+          isShowUsersResult ? renderElement() : (
+            <div className="questionBox questionBox--large">
+              <p className="questionBox__tx">終わり!</p>
+            </div>
+          )
+        }
+
+        <div className="usersResultButton">
+          <ButtonFlat
+            label='RESULT'
+            onTouchTap={ () => this.onTouchTapUsersResult() }
+          />
+        </div>
       </div>
     )
   }
