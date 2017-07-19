@@ -131,7 +131,7 @@ body {
 
       &__wrapImage {
         margin: 0 auto;
-        width: 720px;
+        width: 100%;
       }
 
       & + .questionBox__tx {
@@ -165,7 +165,7 @@ body {
   }
 
   &__item {
-    float: left;
+    display: inline-block;
     position: relative;
     margin-bottom: 24px;
     width: calc(50% - 12px);

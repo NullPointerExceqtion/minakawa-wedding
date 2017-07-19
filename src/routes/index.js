@@ -2,7 +2,6 @@
 // import CoreLayout from '../layouts/CoreLayout'
 
 import CoreLayout from '../layouts/CoreLayout/CoreLayout'
-import Home from './Home'
 import Host from './Host'
 import Guest from './Guest'
 import Signup from './Signup'
@@ -16,11 +15,10 @@ import Ope from './Ope'
 export const createRoutes = (store) => ({
   path        : '/',
   component   : CoreLayout,
-  indexRoute  : Home,
+  indexRoute  : Signup(store),
   childRoutes : [
     Host(store),
     Guest(store),
-    Signup(store),
     Question(store),
     Result(store),
     Ope(store)
