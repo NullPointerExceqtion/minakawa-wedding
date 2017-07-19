@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Snackbar from 'material-ui/Snackbar';
-
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
+
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import CSSTransition from 'react-transition-group/CSSTransition';
 
 import './CoreLayout.scss'
 
@@ -25,7 +27,7 @@ class CoreLayout extends React.Component {
   componentDidMount () {  
     window.socket.on('connect', () => {
       this.setSocketStatus('connect')
-      this.setMessage('接続しました!')
+      this.setMessage('接続しました！')
       this.showSnack()
 
       setTimeout(() => {
@@ -53,6 +55,7 @@ class CoreLayout extends React.Component {
       message
     })
   }
+
   setSocketStatus = (status) => {
     if(status === 'connect') {
       this.setState({
@@ -70,6 +73,7 @@ class CoreLayout extends React.Component {
       open: true,
     })
   }
+
   hideSnack = () => {
     this.setState({
       open: false,
@@ -91,10 +95,16 @@ class CoreLayout extends React.Component {
     return (
       <div>
         <div className='core-layout__viewport'>
-          {children}
+          <TransitionGroup className="transitionGroup">
+            <CSSTransition appear timeout={{appear:1000,enter:2000,exit:1000}} classNames="pageFade" key={this.props.location.key}>
+              { children }
+            </CSSTransition>
+          </TransitionGroup>
         </div>
+
         <Snackbar
           open={ open }
+
           message={ message }
           action={ !isSocketConnect ? '再接続する' : '' }
           onActionTouchTap={ !isSocketConnect ? this.reconnect : ''}

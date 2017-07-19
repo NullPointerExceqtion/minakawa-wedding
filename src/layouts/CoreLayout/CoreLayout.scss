@@ -36,12 +36,23 @@ body {
   background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_pc.jpg);
   background-position: center;
   background-size: cover;
-  // overflow: hidden;
+  overflow: hidden;
 
   @include mq(md) {
     background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_sp.jpg);
   }
 }
+.transitionGroup {
+  width: 100%;
+  height: 100%;
+}
+.pageFade-enter, .pageFade-appear { opacity:0; }
+.pageFade-enter.pageFade-enter-active,
+.pageFade-appear.pageFade-appear-active { opacity:1; transition:opacity 1000ms; }
+.pageFade-enter.pageFade-enter-active { transition-delay:1000ms; }
+.pageFade-exit { opacity:1; }
+.pageFade-exit.pageFade-exit-active { opacity:0; transition:opacity 1000ms; }
+
 
 // ================================
 // Common
@@ -93,10 +104,10 @@ body {
 .questionBox {
   position: absolute;
   margin: auto;
-  top: 132px;
+  top: 140px;
   left: 0;
   right: 0;
-  width: 864px;
+  width: 87%;
 
   &__tx {
     color: #fff;
