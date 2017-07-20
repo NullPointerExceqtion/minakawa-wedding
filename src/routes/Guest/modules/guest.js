@@ -107,6 +107,7 @@ const ACTION_HANDLERS = {
       type,
       _id,
       isSubmitted   : false,
+      isCorrect     : null,
       isAnswerStop  : false,
       isGetQuizItem : true
     })

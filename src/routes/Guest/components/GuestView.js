@@ -64,7 +64,6 @@ class GuestView extends React.Component {
   }
 
   state = {
-    isGetQuizItem  : false,
     selectedRadio  : false,
     selectedNumber : false
   }
@@ -76,9 +75,6 @@ class GuestView extends React.Component {
     // 問題をサーバーから受け取る
     window.socket.on('quizPublished', (quizItem) => {
       this.resetState()
-      this.setState({
-        isGetQuizItem: true
-      })
       showQuizItem(quizItem)
     })
 
@@ -113,13 +109,18 @@ class GuestView extends React.Component {
     })
   }
 
-  radioButtonsElement () {
+  radioButtonsElement (radioNum) {
     const { quizItem, userInfo } = this.props
     const { selectedRadio, selectedNumber } = this.state
 
     const radioGroupClassName = selectedRadio === false ? 'answerBox' : 'answerBox answerBox--selected'
 
-    let radioButtonItems = [1, 2, 3, 4].map((val, index) => {
+    const radioNumArray = []
+    for(let i = 1; i < radioNum + 1; i++) {
+      radioNumArray.push(i)
+    }
+
+    let radioButtonItems = radioNumArray.map((val, index) => {
       return (
         <RadioButton
           className={selectedNumber === val ? 'answerBox__item is-selected' : 'answeraBox__item' }
@@ -175,7 +176,7 @@ class GuestView extends React.Component {
 
     if(!quizItem.isAnswerStop && quizItem.isGetQuizItem) {
       key = 'radio'
-      renderElement = this.radioButtonsElement()
+      renderElement = this.radioButtonsElement(quizItem.type === 'sentence' ? 4 : 3)
     }
 
     if (quizItem.isAnswerStop) {
@@ -193,7 +194,7 @@ class GuestView extends React.Component {
 
     return (
       <TransitionGroup className="transitionGroup">
-        <CSSTransition appear timeout={{appear:1000, enter:2000, exit:1000}} classNames="pageFade" key={key}>
+        <CSSTransition appear timeout={{appear:1000, enter:1000, exit:1000}} classNames="guestFade" key={key}>
           <div className="guestContainer">
             <div className="questionNumber">{questionNumber}</div>
             {renderElement}

@@ -108,38 +108,11 @@ class ResultView extends React.Component {
       }
     }
 
-    if(nextQuizId) {
-      return (
-        <div>
-          <div className="questionNumber">Q{ selectQuizItem.no }</div>
-
-          { renderElement() }
-
-          <div className="usersResultButton">
-            <ButtonFlat
-              label='RESULT'
-              onTouchTap={ () => this.onTouchTapUsersResult() }
-            />
-          </div>
-          <div className="nextButton">
-            <ButtonFlat
-              label='NEXT'
-              onTouchTap={ nextQuizPublished }
-            />
-          </div>
-        </div>
-      )
-    }
-
     return (
       <div>
-        {
-          isShowUsersResult ? renderElement() : (
-            <div className="questionBox questionBox--large">
-              <p className="questionBox__tx">終わり!</p>
-            </div>
-          )
-        }
+        <div className="questionNumber">Q{ selectQuizItem.no }</div>
+
+        { renderElement() }
 
         <div className="usersResultButton">
           <ButtonFlat
@@ -147,6 +120,17 @@ class ResultView extends React.Component {
             onTouchTap={ () => this.onTouchTapUsersResult() }
           />
         </div>
+
+        {
+          nextQuizId ? (
+            <div className="nextButton">
+              <ButtonFlat
+                label='NEXT'
+                onTouchTap={ nextQuizPublished }
+              />
+            </div>
+          ) : ''
+        }
       </div>
     )
   }
