@@ -194,7 +194,7 @@ class GuestView extends React.Component {
 
     return (
       <TransitionGroup className="transitionGroup">
-        <CSSTransition appear timeout={{appear:1000, enter:2000, exit:1000}} classNames="pageFade" key={key}>
+        <CSSTransition appear timeout={{appear:1000, enter:1000, exit:1000}} classNames="guestFade" key={key}>
           <div className="guestContainer">
             <div className="questionNumber">{questionNumber}</div>
             {renderElement}
