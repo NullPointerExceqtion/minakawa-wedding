@@ -3,7 +3,8 @@ import {
   quizListGiven,
   nextQuizPublished,
   answerStop,
-  resetStoreExceptSignup
+  resetStoreExceptSignup,
+  joinRoom
 } from '../../../modules/app'
 import { browserHistory } from 'react-router'
 
@@ -30,6 +31,9 @@ const mapDispatchToProps = (dispatch, state) => {
       return dispatch(nextQuizPublished()).then((nextQuizId) => {
         browserHistory.push(`/host/question/${nextQuizId}`)
       })
+    },
+    joinRoom               : (payload) => {
+      return dispatch(joinRoom(payload))
     }
   }
 }

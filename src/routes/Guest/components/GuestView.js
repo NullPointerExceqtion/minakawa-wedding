@@ -5,6 +5,9 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import './GuestView.scss'
 import Button from '../../../components/Button'
 
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import CSSTransition from 'react-transition-group/CSSTransition';
+
 const resultElementTitle = {
   answer: '回答しました',
   correct: '正解！',
@@ -39,14 +42,15 @@ const checkedIcon = () => (
 // 正解結果画面
 const resultElement = (type) => (
   <div className="resultContainer">
-    <img src={resultElementImage[type]} width="180" height="180"/>
-    <h1 className="resultContainer__ttl">{resultElementTitle[type]}</h1>
-    <p className="resultContainer__tx">{resultElementText[type]}</p>
+    <div className="resultContainer__inner">
+      <img src={resultElementImage[type]} width="180" height="180"/>
+      <h1 className="resultContainer__ttl">{resultElementTitle[type]}</h1>
+      <p className="resultContainer__tx">{resultElementText[type]}</p>
 
-    <div className="logo-sm logo-sm--lowerRight">
-      <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="97" height="auto"/>
+      <div className="logo-sm logo-sm--lowerRight">
+        <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="97" height="auto"/>
+      </div>
     </div>
-
   </div>
 )
 
@@ -66,8 +70,8 @@ class GuestView extends React.Component {
   }
 
   componentDidMount () {
-    const { showQuizItem, showIsCorrectDialog } = this.props
-    window.socket.emit('joinRoom', 'guest')
+    const { showQuizItem, showIsCorrectDialog, joinRoom } = this.props
+    joinRoom('guest')
 
     // 問題をサーバーから受け取る
     window.socket.on('quizPublished', (quizItem) => {
@@ -164,30 +168,38 @@ class GuestView extends React.Component {
 
   render () {
     const { quizItem, userInfo } = this.props
-
     const questionNumber = quizItem.no ? `Q${quizItem.no}` : ''
 
     let renderElement = ''
+    let key = ''
 
     if(!quizItem.isAnswerStop && quizItem.isGetQuizItem) {
+      key = 'radio'
       renderElement = this.radioButtonsElement()
     }
 
     if (quizItem.isAnswerStop) {
       if (quizItem.isCorrect) {
+        key = 'correct'
         renderElement = resultElement('correct')
       } else {
+        key = 'incorrect'
         renderElement = resultElement('incorrect')
       }
     } else if (quizItem.isSubmitted) {
+      key = 'answer'
       renderElement = resultElement('answer')
     }
 
     return (
-      <div className="guestContainer">
-        <div className="questionNumber">{questionNumber}</div>
-        {renderElement}
-      </div>
+      <TransitionGroup className="transitionGroup">
+        <CSSTransition appear timeout={{appear:1000, enter:2000, exit:1000}} classNames="pageFade" key={key}>
+          <div className="guestContainer">
+            <div className="questionNumber">{questionNumber}</div>
+            {renderElement}
+          </div>
+        </CSSTransition>
+      </TransitionGroup>
     )
   }
 }

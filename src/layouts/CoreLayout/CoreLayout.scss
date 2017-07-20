@@ -36,12 +36,23 @@ body {
   background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_pc.jpg);
   background-position: center;
   background-size: cover;
-  // overflow: hidden;
+  overflow: hidden;
 
   @include mq(md) {
     background-image: url(https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_bg_sp.jpg);
   }
 }
+.transitionGroup {
+  width: 100%;
+  height: 100%;
+}
+.pageFade-enter, .pageFade-appear { opacity:0; }
+.pageFade-enter.pageFade-enter-active,
+.pageFade-appear.pageFade-appear-active { opacity:1; transition:opacity 1000ms; }
+.pageFade-enter.pageFade-enter-active { transition-delay:1000ms; }
+.pageFade-exit { opacity:1; }
+.pageFade-exit.pageFade-exit-active { opacity:0; transition:opacity 1000ms; }
+
 
 // ================================
 // Common
@@ -74,13 +85,14 @@ body {
 // 左上のQuestion Number
 .questionNumber {
   position: absolute;
-  top: 10px;
+  top: 2px;
   left: 20px;
   color: #FFFFFF;
   letter-spacing: -2.7px;
   font-size: 94px;
   transform: rotate(-16deg);
   font-weight: 900;
+  z-index: 10;
 
   @include mq(md) {
     top: 5px;
@@ -93,10 +105,10 @@ body {
 .questionBox {
   position: absolute;
   margin: auto;
-  top: 132px;
+  top: 140px;
   left: 0;
   right: 0;
-  width: 864px;
+  width: 87%;
 
   &__tx {
     color: #fff;
@@ -120,7 +132,7 @@ body {
 
       &__wrapImage {
         margin: 0 auto;
-        width: 720px;
+        width: 100%;
       }
 
       & + .questionBox__tx {
@@ -138,9 +150,17 @@ body {
   list-style-type: none;
   text-align: center;
 
+  .questionNumber {
+    top: -44px;
+    left: -22px;
+  }
+
   &__wrapImage {
-    width: inherit;
-    height: inherit;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 
     img {
       width: 100%;
@@ -151,11 +171,17 @@ body {
 
   &__item {
     display: inline-block;
+    position: relative;
     margin-bottom: 24px;
-    width: 416px;
-    height: 240px;
+    width: calc(50% - 12px);
     background: #D8D8D8;
     vertical-align: top;
+
+    &::before {
+      display: block;
+      content: '';
+      padding-top: 57.69%;
+    }
 
     &:nth-child(odd) {
       margin-right: 24px;
@@ -163,6 +189,12 @@ body {
 
     &:last-child {
       background: transparent;
+    }
+
+    p {
+      position: absolute;
+      top: 0;
+      text-align: left;
     }
   }
 }
