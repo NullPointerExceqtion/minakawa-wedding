@@ -39,14 +39,15 @@ const checkedIcon = () => (
 // 正解結果画面
 const resultElement = (type) => (
   <div className="resultContainer">
-    <img src={resultElementImage[type]} width="180" height="180"/>
-    <h1 className="resultContainer__ttl">{resultElementTitle[type]}</h1>
-    <p className="resultContainer__tx">{resultElementText[type]}</p>
+    <div className="resultContainer__inner">
+      <img src={resultElementImage[type]} width="180" height="180"/>
+      <h1 className="resultContainer__ttl">{resultElementTitle[type]}</h1>
+      <p className="resultContainer__tx">{resultElementText[type]}</p>
 
-    <div className="logo-sm logo-sm--lowerRight">
-      <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="97" height="auto"/>
+      <div className="logo-sm logo-sm--lowerRight">
+        <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="97" height="auto"/>
+      </div>
     </div>
-
   </div>
 )
 

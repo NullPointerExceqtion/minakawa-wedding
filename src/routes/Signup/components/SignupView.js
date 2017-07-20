@@ -75,57 +75,68 @@ class SignupView extends React.Component {
     })
   }
 
+  handleKeyPress (e) {
+    if(e.charCode === 13) {
+      e.preventDefault()
+      this.handleSubmit()
+    }
+  }
+
   render () {
     const { errorText, isProgressShow, isNormalUserName } = this.state
 
     return (
       <div className="signupContainer">
-        <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="100%" height="auto" />
+        <div className="signupContainer__inner">
+          <img src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_sp.png" width="100%" height="auto" />
 
-        <TextField
-          hintText='ハンドルネームを登録してください'
-          name='userName'
-          errorText={errorText}
-          onChange={this.handleChange}
-          ref="userName"
+          <TextField
+            hintText='ハンドルネームを登録してください'
+            name='userName'
+            errorText={ errorText }
+            onChange={ this.handleChange }
+            onKeyPress={ (e) => this.handleKeyPress(e) }
+            ref="userName"
 
-          style={{
-            margin: '48px 0 40px',
-            padding: '0 15px',
-            borderRadius: '6px',
-            width: '100%',
-            height: 40,
-            lineHeight: '40px',
-            border: '3px solid #fff'
-          }}
+            style={{
+              margin: '48px 0 40px',
+              padding: '0 15px',
+              borderRadius: '6px',
+              width: '100%',
+              height: 40,
+              lineHeight: '40px',
+              border: '3px solid #fff'
+            }}
 
-          underlineStyle={{
-            display: 'none'
-          }}
+            underlineStyle={{
+              display: 'none'
+            }}
 
-          inputStyle={{
-            position: 'absolute',
-            color: '#fff',
-            lineHeight: '34px',
-            fontSize: '12px',
-            bottom: 'inherit'
-          }}
+            inputStyle={{
+              position: 'absolute',
+              color: '#fff',
+              height: 34,
+              lineHeight: 34, 
+              fontSize: 12,
+              bottom: 'inherit'
+            }}
 
-          hintStyle={{
-            color: '#fff',
-            lineHeight: '34px',
-            fontSize: '12px',
-            bottom: 'inherit'
-          }}
+            hintStyle={{
+              color: '#fff',
+              lineHeight: '34px',
+              fontSize: '12px',
+              bottom: 'inherit'
+            }}
 
-          errorStyle={{
-            position: 'absolute',
-            bottom: '-24px'
-          }}
-        />
+            errorStyle={{
+              position: 'absolute',
+              bottom: '-24px'
+            }}
+          />
 
-        <Button label='OK' disabled={ !isNormalUserName } onTouchTap={ this.handleSubmit } />
-        <FullWindowCircleProgress isProgressShow={ isProgressShow } />
+          <Button label='OK' disabled={ !isNormalUserName } onTouchTap={ this.handleSubmit } />
+          <FullWindowCircleProgress isProgressShow={ isProgressShow } />
+        </div>
       </div>
     )
   }

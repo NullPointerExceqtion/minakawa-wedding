@@ -9,7 +9,7 @@ class Button extends React.Component {
   }
 
   render () {
-    const { label, onTouchTap, disabled } = this.props
+    const { label, onTouchTap, disabled, type } = this.props
 
     return (
       <div className="buttonContainer">
@@ -18,6 +18,7 @@ class Button extends React.Component {
           label={ label }
           disabledBackgroundColor='#fff'
           disabledLabelColor="#000"
+          type={type}
 
           style={{
             borderRadius: 100,
