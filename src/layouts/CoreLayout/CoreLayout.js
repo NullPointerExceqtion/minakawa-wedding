@@ -25,7 +25,11 @@ class CoreLayout extends React.Component {
   }
 
   componentDidMount () {  
-    window.socket.on('connect', () => {
+    this.websocketConnect()
+
+    window.socket.on('reconnect' , () => {
+      this.websocketConnect()
+
       this.setSocketStatus('connect')
       this.setMessage('接続しました！')
       this.showSnack()
@@ -47,6 +51,19 @@ class CoreLayout extends React.Component {
       muiTheme: getMuiTheme({
         fontFamily: font
       })
+    }
+  }
+
+  websocketConnect = () => {
+    try {
+      window.persistorPromise.then(() => {
+        const roomName = store.getState().app.roomName
+        if(roomName) {
+          window.socket.emit('joinRoom', roomName)
+        }
+      })
+    } catch(e) {
+      console.warn(e)
     }
   }
 
@@ -96,7 +113,7 @@ class CoreLayout extends React.Component {
       <div>
         <div className='core-layout__viewport'>
           <TransitionGroup className="transitionGroup">
-            <CSSTransition appear timeout={{appear:1000,enter:2000,exit:1000}} classNames="pageFade" key={this.props.location.key}>
+            <CSSTransition appear timeout={{appear:1000, enter:2000, exit:1000}} classNames="pageFade" key={this.props.location.key}>
               { children }
             </CSSTransition>
           </TransitionGroup>
@@ -107,7 +124,7 @@ class CoreLayout extends React.Component {
 
           message={ message }
           action={ !isSocketConnect ? '再接続する' : '' }
-          onActionTouchTap={ !isSocketConnect ? this.reconnect : ''}
+          onActionTouchTap={ !isSocketConnect ? this.reconnect : () => {}}
           onRequestClose={(e) => console.log(e)}
 
           contentStyle={{

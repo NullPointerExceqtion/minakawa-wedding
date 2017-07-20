@@ -13,11 +13,10 @@ class HostView extends React.Component {
   }
 
   componentDidMount () {
-    socket.emit('joinRoom', 'host')
-
-    const { quizListGiven, resetStoreExceptSignup } = this.props
+    const { quizListGiven, resetStoreExceptSignup, joinRoom } = this.props
 
     resetStoreExceptSignup().then(() => {
+      joinRoom('host')
       quizListGiven()
     })
   }
@@ -31,7 +30,7 @@ class HostView extends React.Component {
           <img className="hostContainer__logo" src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_pc.png" width="761" height="351" />
           <Button label='START' onTouchTap={ nextQuizPublished }></Button>
 
-          <ReactPlayer url="/sekai.mp3" playing width="0" height="0" volume="0.4" />
+          <ReactPlayer url="/sekai.mp3" playing width="0" height="0" volume={ 0.2 } />
         </div>
       </div>
     )

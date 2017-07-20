@@ -14,8 +14,8 @@ class QuestionView extends React.Component {
   }
 
   state = {
-    finishTime              : 40,
-    progressTimeOfCowntDown : 40
+    finishTime              : 30,
+    progressTimeOfCowntDown : 30
   }
 
   emitAnswerStop (_id) {

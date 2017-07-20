@@ -9,6 +9,7 @@ export const ANSWER_STOP = 'ANSWER_STOP'
 export const SET_SELECTED_QUIZID = 'SET_SELECTED_QUIZID'
 export const SET_NEXT_QUIZID = 'SET_NEXT_QUIZID'
 export const RESULT_ANNOUNCEMENT = 'RESULT_ANNOUNCEMENT'
+export const JOIN_ROOM = 'JOIN_ROOM'
 
 // Action自体はreducers.jsに記入
 export const RESET_STORE_EXCEPT_SIGNUP = 'RESET_STORE_EXCEPT_SIGNUP'
@@ -183,6 +184,24 @@ export const setNextQuizId = (payload) => {
   }
 }
 
+/**
+ * joinRoom
+ * @param {String} payload roomName
+ */
+export const joinRoom = (payload) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve) => {
+      window.socket.emit('joinRoom', payload)
+      dispatch({
+        type   : JOIN_ROOM,
+        payload
+      })
+
+      resolve()
+    })
+  }
+}
+
 export const actions = {
   registQuiz,
   quizListGiven,
@@ -190,7 +209,8 @@ export const actions = {
   answerStop,
   setSelectedQuizId,
   setNextQuizId,
-  resultAnnouncement
+  resultAnnouncement,
+  joinRoom
 }
 
 // ------------------------------------
@@ -242,6 +262,11 @@ const ACTION_HANDLERS = {
     return Object.assign({}, state, {
       usersInfo : action.payload
     })
+  },
+  [JOIN_ROOM]           : (state, action) => {
+    return Object.assign({}, state, {
+      roomName  : action.payload
+    })
   }
 }
 
@@ -249,9 +274,10 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  quizItems: [],
-  selectedQuizId: false,
-  nextQuizId: false
+  quizItems      : [],
+  selectedQuizId : false,
+  nextQuizId     : false,
+  roomName       : ''
 }
 
 export default function hostReducer (state = initialState, action) {

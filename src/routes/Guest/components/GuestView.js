@@ -67,8 +67,8 @@ class GuestView extends React.Component {
   }
 
   componentDidMount () {
-    const { showQuizItem, showIsCorrectDialog } = this.props
-    window.socket.emit('joinRoom', 'guest')
+    const { showQuizItem, showIsCorrectDialog, joinRoom } = this.props
+    joinRoom('guest')
 
     // 問題をサーバーから受け取る
     window.socket.on('quizPublished', (quizItem) => {

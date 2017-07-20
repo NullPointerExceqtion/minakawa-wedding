@@ -28,7 +28,8 @@ class SignupView extends React.Component {
   }
 
   componentDidMount () {
-    window.socket.emit('joinRoom', 'guest')
+    const { joinRoom }  = this.props
+    joinRoom('guest')
   }
 
   handleChange (e) {
@@ -103,7 +104,7 @@ class SignupView extends React.Component {
               padding: '0 15px',
               borderRadius: '6px',
               width: '100%',
-              height: 40,
+              height: '40px',
               lineHeight: '40px',
               border: '3px solid #fff'
             }}
@@ -115,9 +116,8 @@ class SignupView extends React.Component {
             inputStyle={{
               position: 'absolute',
               color: '#fff',
-              height: 34,
-              lineHeight: 34, 
-              fontSize: 12,
+              lineHeight: '34px', 
+              fontSize: '12px',
               bottom: 'inherit'
             }}
 
