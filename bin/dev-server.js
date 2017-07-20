@@ -59,7 +59,7 @@ io.on('connection', function (socket) {
     debugSocket('quizListGiven')
 
     // 全問題の出力
-    Questions.find({}, function(err, docs) {
+    Questions.find({}, {}, {sort:{no: 1}}, function(err, docs) {
       let quizlist = []
       for (let i = 0, size = docs.length; i < size; ++i) {
         if (docs[i]) {
