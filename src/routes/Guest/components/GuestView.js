@@ -64,7 +64,6 @@ class GuestView extends React.Component {
   }
 
   state = {
-    isGetQuizItem  : false,
     selectedRadio  : false,
     selectedNumber : false
   }
@@ -76,9 +75,6 @@ class GuestView extends React.Component {
     // 問題をサーバーから受け取る
     window.socket.on('quizPublished', (quizItem) => {
       this.resetState()
-      this.setState({
-        isGetQuizItem: true
-      })
       showQuizItem(quizItem)
     })
 
