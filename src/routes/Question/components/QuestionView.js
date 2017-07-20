@@ -65,16 +65,19 @@ class QuestionView extends React.Component {
       <div className="questionBox">
         <ul className="imageBox">
           <li className="imageBox__item">
+            <div className="questionNumber">1</div>
             <div className="imageBox__wrapImage">
               <img src={imagePath1} />
             </div>
           </li>
           <li className="imageBox__item">
+            <div className="questionNumber">2</div>
             <div className="imageBox__wrapImage">
               <img src={imagePath2} />
             </div>
           </li>
           <li className="imageBox__item">
+            <div className="questionNumber">3</div>
             <div className="imageBox__wrapImage">
               <img src={imagePath3} />
             </div>

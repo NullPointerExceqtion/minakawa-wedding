@@ -85,13 +85,14 @@ body {
 // 左上のQuestion Number
 .questionNumber {
   position: absolute;
-  top: 10px;
+  top: 2px;
   left: 20px;
   color: #FFFFFF;
   letter-spacing: -2.7px;
   font-size: 94px;
   transform: rotate(-16deg);
   font-weight: 900;
+  z-index: 10;
 
   @include mq(md) {
     top: 5px;
@@ -148,7 +149,11 @@ body {
   width: 100%;
   list-style-type: none;
   text-align: center;
-  overflow: hidden;
+
+  .questionNumber {
+    top: -44px;
+    left: -22px;
+  }
 
   &__wrapImage {
     position: absolute;
