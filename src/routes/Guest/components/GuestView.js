@@ -5,6 +5,9 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 import './GuestView.scss'
 import Button from '../../../components/Button'
 
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import CSSTransition from 'react-transition-group/CSSTransition';
+
 const resultElementTitle = {
   answer: '回答しました',
   correct: '正解！',
@@ -165,30 +168,38 @@ class GuestView extends React.Component {
 
   render () {
     const { quizItem, userInfo } = this.props
-
     const questionNumber = quizItem.no ? `Q${quizItem.no}` : ''
 
     let renderElement = ''
+    let key = ''
 
     if(!quizItem.isAnswerStop && quizItem.isGetQuizItem) {
+      key = 'radio'
       renderElement = this.radioButtonsElement()
     }
 
     if (quizItem.isAnswerStop) {
       if (quizItem.isCorrect) {
+        key = 'correct'
         renderElement = resultElement('correct')
       } else {
+        key = 'incorrect'
         renderElement = resultElement('incorrect')
       }
     } else if (quizItem.isSubmitted) {
+      key = 'answer'
       renderElement = resultElement('answer')
     }
 
     return (
-      <div className="guestContainer">
-        <div className="questionNumber">{questionNumber}</div>
-        {renderElement}
-      </div>
+      <TransitionGroup className="transitionGroup">
+        <CSSTransition appear timeout={{appear:1000, enter:2000, exit:1000}} classNames="pageFade" key={key}>
+          <div className="guestContainer">
+            <div className="questionNumber">{questionNumber}</div>
+            {renderElement}
+          </div>
+        </CSSTransition>
+      </TransitionGroup>
     )
   }
 }
