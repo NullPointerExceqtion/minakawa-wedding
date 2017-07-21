@@ -66,21 +66,21 @@
   }
 }
 
-.resultContainer {
+.resultContainer.resultContainer--guest {
   display: flex;
   height: 100%;
   align-items: center;
   justify-content: center;
   text-align: center;
 
-  &__ttl {
+  .resultContainer__ttl {
     margin-top: 16px;
     font-size: 40px;
     font-weight: 900;
     color: #FFF;
   }
 
-  &__tx {
+  .resultContainer__tx {
     font-size: 14px;
     color: #FFF;
     letter-spacing: -0.8px;

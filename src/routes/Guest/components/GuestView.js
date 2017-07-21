@@ -41,7 +41,7 @@ const checkedIcon = () => (
 
 // 正解結果画面
 const resultElement = (type) => (
-  <div className="resultContainer">
+  <div className="resultContainer resultContainer--guest">
     <div className="resultContainer__inner">
       <img src={resultElementImage[type]} width="180" height="180"/>
       <h1 className="resultContainer__ttl">{resultElementTitle[type]}</h1>
