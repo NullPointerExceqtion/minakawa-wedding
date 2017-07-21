@@ -138,7 +138,7 @@ class ResultView extends React.Component {
 
   render () {
     return (
-      <div className="resultContainer">
+      <div className="resultContainer resultContainer--host">
         { this.detectRenderElement() }
       </div>
     )
