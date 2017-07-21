@@ -3,13 +3,13 @@
     height: 100%;
     position: relative;
 
-    .questionBox--image {
-        top: 120px;
+    .questionBox--image > *:first-child {
+        padding-top: 120px;
     }
 }
 
 .nextButton,
-.usersResultButton {
+.usersRankingButton {
     position: absolute;
     z-index: 50;
 }
@@ -17,7 +17,51 @@
     right: 20px;
     bottom: 10px;
 }
-.usersResultButton {
+.usersRankingButton {
     left: 20px;
     bottom: 10px;
+}
+
+
+.rankingBox {
+    width: 80%;
+    margin: 0 auto;
+}
+.rankingBox__ttl {
+    font-size: 60px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    line-height: 1;
+}
+.rankingItem {
+    display: table;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    line-height: 1;
+
+    & > * {
+        display: table-cell;
+    }
+
+    &__name {
+        width: 80%;
+        font-size: 40px;
+        font-weight: bold;
+
+        span {
+            font-size: 20px;
+            padding-left: 10px;
+        }
+    }
+
+    &__point {
+        width: 20%;
+        font-size: 100px;
+        font-weight: bold;
+        text-align: right;
+    }
 }
