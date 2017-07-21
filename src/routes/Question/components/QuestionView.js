@@ -55,7 +55,9 @@ class QuestionView extends React.Component {
   typeSentenceElement (body) {
     return (
       <div className="questionBox">
-        <p className="questionBox__tx">{body}</p>
+        <div className="questionBox__inner">
+          <p className="questionBox__tx">{body}</p>
+        </div>
       </div>
     )
   }
@@ -63,29 +65,31 @@ class QuestionView extends React.Component {
   typeImageElement (imagePath1, imagePath2, imagePath3, body) {
     return (
       <div className="questionBox">
-        <ul className="imageBox">
-          <li className="imageBox__item">
-            <div className="questionNumber">1</div>
-            <div className="imageBox__wrapImage">
-              <img src={imagePath1} />
-            </div>
-          </li>
-          <li className="imageBox__item">
-            <div className="questionNumber">2</div>
-            <div className="imageBox__wrapImage">
-              <img src={imagePath2} />
-            </div>
-          </li>
-          <li className="imageBox__item">
-            <div className="questionNumber">3</div>
-            <div className="imageBox__wrapImage">
-              <img src={imagePath3} />
-            </div>
-          </li>
-          <li className="imageBox__item questionBox__tx">
-            <p>{body}</p>
-          </li>
-        </ul>
+        <div className='questionBox__inner'>
+          <ul className="imageBox">
+            <li className="imageBox__item">
+              <div className="questionNumber">1</div>
+              <div className="imageBox__wrapImage">
+                <img src={imagePath1} />
+              </div>
+            </li>
+            <li className="imageBox__item">
+              <div className="questionNumber">2</div>
+              <div className="imageBox__wrapImage">
+                <img src={imagePath2} />
+              </div>
+            </li>
+            <li className="imageBox__item">
+              <div className="questionNumber">3</div>
+              <div className="imageBox__wrapImage">
+                <img src={imagePath3} />
+              </div>
+            </li>
+            <li className="imageBox__item questionBox__tx">
+              <p>{body}</p>
+            </li>
+          </ul>
+        </div>
       </div>
     )
   }

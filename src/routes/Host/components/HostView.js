@@ -30,7 +30,7 @@ class HostView extends React.Component {
           <img className="hostContainer__logo" src="https://cdn.rawgit.com/NullPointerExceqtion/minakawa-wedding/image/public/img/img_logo_pc.png" width="761" height="351" />
           <Button label='START' onTouchTap={ nextQuizPublished }></Button>
 
-          <ReactPlayer url="/sekai.mp3" playing width="0" height="0" volume={ 0.2 } />
+          <ReactPlayer url="/sekai.mp3" playing width="0" height="0" volume={ 0.1 } />
         </div>
       </div>
     )

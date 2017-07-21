@@ -4,8 +4,6 @@ import ButtonFlat from '../../../components/ButtonFlat'
 
 import './ResultView.scss'
 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-
 class ResultView extends React.Component {
   static propTypes = {
     selectQuizItem     : PropTypes.object,
@@ -16,13 +14,15 @@ class ResultView extends React.Component {
   }
 
   state = {
-    isShowUsersResult : false
+    isShowUsersRanking : false
   }
 
   typeSentenceElement (description) {
     return (
       <div className="questionBox questionBox--large">
-        <p className="questionBox__tx">{ description }</p>
+        <div className="questionBox__inner">
+          <p className="questionBox__tx">{ description }</p>
+        </div>
       </div>
     )
   }
@@ -45,37 +45,40 @@ class ResultView extends React.Component {
     )
   }
 
-  typeUsersResultElement () {
+  typeUsersRankingElement () {
     const {
       usersInfo
     } = this.props
 
     return (
-      <div className="questionBox questionBox--large">
-        {
-          usersInfo.map((val, index) => {
-            return (
-              <Card key={index}>
-                <CardHeader
-                  title={`${val.name} さん`}
-                  subtitle={val.correct_answer_count}
-                />
-              </Card>
-            )
-          })
-        }
+      <div className="questionBox questionBox--large questionBox--ranking">
+        <div className="questionBox__inner">
+          <div className="rankingBox">
+            <p className="rankingBox__ttl">ランキング</p>
+            {
+              usersInfo.map((val, index) => {
+                return (
+                  <div className="rankingItem">
+                    <p className="rankingItem__name">{val.name}<span>さん</span></p>
+                    <p className="rankingItem__point">{val.correct_answer_count}</p>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
       </div>
     )
   }
 
-  onTouchTapUsersResult () {
+  onTouchTapUsersRanking () {
     const {
       resultAnnouncement
     } = this.props
 
     resultAnnouncement().then(() => {
       this.setState({
-        isShowUsersResult : true
+        isShowUsersRanking : true
       })
     })
   }
@@ -88,13 +91,13 @@ class ResultView extends React.Component {
     } = this.props
 
     const {
-      isShowUsersResult
+      isShowUsersRanking
     } = this.state
 
     const renderElement = () => {
       // usersResultを表示
-      if(isShowUsersResult) {
-        return this.typeUsersResultElement()
+      if(isShowUsersRanking) {
+        return this.typeUsersRankingElement()
 
       } else if(selectQuizItem.type === 'sentence') {
         // type : sentenceの結果
@@ -111,16 +114,21 @@ class ResultView extends React.Component {
 
     return (
       <div>
-        <div className="questionNumber">Q{ selectQuizItem.no }</div>
-
         { renderElement() }
 
-        <div className="usersResultButton">
-          <ButtonFlat
-            label='RESULT'
-            onTouchTap={ () => this.onTouchTapUsersResult() }
-          />
-        </div>
+        {
+          !isShowUsersRanking ? (
+            <div>
+              <div className="questionNumber">Q{ selectQuizItem.no }</div>
+              <div className="usersRankingButton">
+                <ButtonFlat
+                  label='Ranking'
+                  onTouchTap={ () => this.onTouchTapUsersRanking() }
+                />
+              </div>
+            </div>
+          ) : ''
+        }
 
         {
           nextQuizId ? (

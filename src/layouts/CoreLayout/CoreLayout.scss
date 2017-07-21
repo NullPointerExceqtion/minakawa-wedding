@@ -112,10 +112,21 @@ body {
 .questionBox {
   position: absolute;
   margin: auto;
-  top: 140px;
+  top: 0;
   left: 0;
   right: 0;
-  width: 87%;
+  bottom: 74px;
+  width: 100%;
+  overflow-y: auto;
+
+  &__inner {
+    width: 87%;
+    margin: 0 auto;
+  }
+
+  & > *:first-child {
+    padding-top: 140px;
+  }
 
   &__tx {
     color: #fff;
