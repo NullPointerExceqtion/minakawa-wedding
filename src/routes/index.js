@@ -8,6 +8,7 @@ import Signup from './Signup'
 import Question from './Question'
 import Result from './Result'
 import Ope from './Ope'
+import Home from './Home'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -21,7 +22,8 @@ export const createRoutes = (store) => ({
     Guest(store),
     Question(store),
     Result(store),
-    Ope(store)
+    Ope(store),
+    Home(store)
   ]
 })
 

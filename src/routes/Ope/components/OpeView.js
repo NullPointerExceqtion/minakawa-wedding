@@ -21,6 +21,14 @@ class HostView extends React.Component {
 
     return (
       <div>
+        <ul>
+          <li><Link to='/guest'>Guest</Link></li>
+          <li><Link to='/host'>Host</Link></li>
+          <li><Link to='/'>Signup</Link></li>
+          <li><Link to='/ope'>Ope</Link></li>
+          <li><Link to='/home'>Home</Link></li>
+        </ul>
+
         <QuizList
           quizItems={quizItems}
           onTouchTap={quizPublished}
@@ -28,13 +36,6 @@ class HostView extends React.Component {
         />
 
         <RaisedButton label='Clear Storage' onTouchTap={this.clearStorage} />
-
-        <ul>
-          <li><Link to='/guest'>Guest</Link></li>
-          <li><Link to='/host'>Host</Link></li>
-          <li><Link to='/'>Signup</Link></li>
-          <li><Link to='/ope'>Ope</Link></li>
-        </ul>
       </div>
     )
   }
