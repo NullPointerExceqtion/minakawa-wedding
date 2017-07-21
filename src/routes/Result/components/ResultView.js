@@ -29,17 +29,18 @@ class ResultView extends React.Component {
 
   typeImageElement (description, imagePath) {
     return (
-      <div className="questionBox questionBox--large">
-
-        <div className="imageBox">
-          <div className="imageBox__item">
-            <div className="imageBox__wrapImage">
-              <img src={ imagePath } />
+      <div className="questionBox questionBox--large questionBox--image">
+        <div className="questionBox__inner">
+          <div className="imageBox">
+            <div className="imageBox__item">
+              <div className="imageBox__wrapImage">
+                <img src={ imagePath } />
+              </div>
             </div>
           </div>
-        </div>
 
-        <p className="questionBox__tx">{ description }</p>
+          <p className="questionBox__tx">{ description }</p>
+        </div>
       </div>
     )
   }
