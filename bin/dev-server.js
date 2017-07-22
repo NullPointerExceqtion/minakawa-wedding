@@ -89,17 +89,19 @@ io.on('connection', function (socket) {
 
     //対象問題の検索
     Questions.find({'_id': quizId }, function (err, docs) {
-      let quizinfo
+      if (err) { console.warn(err) }
+      if (!docs.length) { console.warn('noting') }
+      else {
+        let quizinfo = docs[0]
 
-      if (docs) {
-        quizinfo = docs[0]
         //正解なら対象ユーザーの正解数をカウントアップ
         if (quizinfo.correct_answer == submittedNumber) {
           Users.find({'_id': userId}, function (err, docs) {
-            let userinfo
-            
-            if (docs) {
-              userinfo = docs[0]
+            if (err) { console.warn(err) }
+            if (!docs.length) { console.warn('noting') }
+            else {
+
+              let userinfo = docs[0]
               Users.update({ '_id': userId },
               { $set: { correct_answer_count: userinfo.correct_answer_count+1 } },
               function (err) {
