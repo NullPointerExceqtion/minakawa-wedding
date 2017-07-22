@@ -89,16 +89,16 @@ io.on('connection', function (socket) {
 
     //対象問題の検索
     Questions.find({'_id': quizId }, function (err, docs) {
-      if (err) { console.warn(err) }
-      if (!docs.length) { console.warn('noting') }
+      if (err) { console.log(err) }
+      if (!docs.length) { debugSocket('noting') }
       else {
         let quizinfo = docs[0]
 
         //正解なら対象ユーザーの正解数をカウントアップ
         if (quizinfo.correct_answer == submittedNumber) {
           Users.find({'_id': userId}, function (err, docs) {
-            if (err) { console.warn(err) }
-            if (!docs.length) { console.warn('noting') }
+            if (err) { console.log(err) }
+            if (!docs.length) { debugSocket('noting') }
             else {
 
               let userinfo = docs[0]
